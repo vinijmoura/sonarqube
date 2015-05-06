@@ -7,6 +7,7 @@ module.exports = (grunt) ->
 
   pkg = grunt.file.readJSON('package.json')
   expressPort = '<%= grunt.option("port") || 3000 %>'
+  app = grunt.option 'app'
   isWindows = process.platform == 'win32'
 
   grunt.initConfig
@@ -158,7 +159,7 @@ module.exports = (grunt) ->
         paths:
           'backbone': 'third-party/backbone'
           'backbone.marionette': 'third-party/backbone.marionette'
-          'handlebars': 'third-party/handlebars'
+          'handlebars': 'empty:'
           'moment': 'third-party/moment'
           'select-list': 'common/select-list'
           'jquery.mockjax': 'third-party/jquery.mockjax'
@@ -235,6 +236,11 @@ module.exports = (grunt) ->
       markdown: options:
         name: 'markdown/app'
         out: '<%= grunt.option("assetsDir") || pkg.assets %>build/js/markdown/app.js'
+
+      app: options:
+        baseUrl: './apps'
+        name: '<%= grunt.option("app") %>/app'
+        out: './src/main/webapp/js/<%= grunt.option("app") %>/app.js'
 
 
     parallel:
@@ -325,6 +331,14 @@ module.exports = (grunt) ->
             '<%= pkg.sources %>hbs/markdown/**/*.hbs'
           ]
 
+      app:
+        options:
+          amd: true
+        files:
+          './apps/<%= grunt.option("app") %>/templates/templates.js': [
+            './apps/<%= grunt.option("app") %>/templates/**/*.hbs'
+          ]
+
 
     clean:
       options:
@@ -332,6 +346,7 @@ module.exports = (grunt) ->
       css: ['<%= grunt.option("assetsDir") || pkg.assets %>css/']
       js: ['<%= grunt.option("assetsDir") || pkg.assets %>js/']
       build: ['<%= grunt.option("assetsDir") || pkg.assets %>build/']
+      app: ['./apps/<%= grunt.option("app") %>/templates/templates.js']
 
 
     copy:
@@ -409,6 +424,8 @@ module.exports = (grunt) ->
           dest: '<%= grunt.option("assetsDir") || pkg.assets %>js'
           ext: '.js'
         ]
+      app:
+        './src/main/webapp/js/<%= grunt.option("app") %>/app.js': './src/main/webapp/js/<%= grunt.option("app") %>/app.js'
 
 
     curl:
@@ -510,3 +527,7 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'maven-build-skip-tests-false-coverage',
       ['testCoverage', 'build']
+
+
+  grunt.registerTask 'build-app',
+      ['handlebars:app', 'requirejs:app', 'clean:app', 'uglify_parallel:app']
