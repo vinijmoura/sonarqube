@@ -67,14 +67,21 @@ define([
           isSettingsActive = _.some(SETTINGS_URLS, function (url) {
             return href.indexOf(url) !== -1;
           }),
-          isOverviewActive = !isMoreActive && href.indexOf('/dashboard') !== -1 && search.indexOf('did=') === -1;
+          isOverviewActive = !isMoreActive && href.indexOf('/dashboard') !== -1 && search.indexOf('did=') === -1,
+          component = this.model.get('component'),
+          mainDashboardName = '';
+      if (component && _.size(component.dashboards) > 0) {
+        mainDashboardName = _.first(component.dashboards).name;
+      }
       return _.extend(Marionette.Layout.prototype.serializeData.apply(this, arguments), {
         canManageContextDashboards: !!window.SS.user,
         contextKeyEncoded: encodeURIComponent(this.model.get('componentKey')),
 
         isOverviewActive: isOverviewActive,
         isSettingsActive: isSettingsActive,
-        isMoreActive: isMoreActive
+        isMoreActive: isMoreActive,
+
+        mainDashboardName: mainDashboardName
       });
     }
   });

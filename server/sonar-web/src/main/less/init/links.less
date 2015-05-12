@@ -24,7 +24,7 @@
 // Base
 
 .link-variant(@baseColor, @hoverColor, @borderColor) {
-  border-bottom: 1px solid @borderColor;
+  border-bottom-color: @borderColor;
   color: @baseColor;
   
   &:hover, &:active, &:focus { color: @hoverColor; }
@@ -32,6 +32,8 @@
 
 a {
   .link-variant(@darkBlue, @blue, @lightBlue);
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
   cursor: pointer;
   outline: none;
   text-decoration: none;

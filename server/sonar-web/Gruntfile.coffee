@@ -236,6 +236,10 @@ module.exports = (grunt) ->
         name: 'markdown/app'
         out: '<%= grunt.option("assetsDir") || pkg.assets %>build/js/markdown/app.js'
 
+      overview: options:
+        name: 'overview/app'
+        out: '<%= grunt.option("assetsDir") || pkg.assets %>build/js/overview/app.js'
+
 
     parallel:
       compile:
@@ -323,6 +327,9 @@ module.exports = (grunt) ->
           ]
           '<%= grunt.option("assetsDir") || pkg.assets %>js/templates/markdown.js': [
             '<%= pkg.sources %>hbs/markdown/**/*.hbs'
+          ]
+          '<%= grunt.option("assetsDir") || pkg.assets %>js/templates/overview.js': [
+            '<%= pkg.sources %>hbs/overview/**/*.hbs'
           ]
 
 
@@ -456,7 +463,7 @@ module.exports = (grunt) ->
 
       less:
         files: '<%= pkg.sources %>less/**/*.less'
-        tasks: ['less:dev']
+        tasks: ['less:build']
 
       coffee:
         files: '<%= pkg.sources %>coffee/**/*.coffee'

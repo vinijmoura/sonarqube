@@ -22,7 +22,10 @@
 
   <ul class="nav navbar-nav nav-tabs">
     <li {{#if isOverviewActive}}class="active"{{/if}}>
-      <a href="{{componentPermalink component.key}}">{{t 'overview.page'}}</a>
+      <a href="{{componentPermalink component.key}}">{{mainDashboardName}}</a>
+    </li>
+    <li {{#isActiveLink '/overview'}}class="active"{{/isActiveLink}}>
+      <a href="{{link '/overview/index?id=' contextKeyEncoded}}">{{t 'overview.page'}}</a>
     </li>
     <li {{#isActiveLink '/components'}}class="active"{{/isActiveLink}}>
       <a href="{{componentBrowsePermalink component.key}}">{{t 'components.page'}}</a>
