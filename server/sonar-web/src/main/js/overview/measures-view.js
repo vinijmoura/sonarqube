@@ -17,24 +17,15 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-define(function () {
+define([
+  'templates/overview'
+], function () {
 
-  return Backbone.Router.extend({
-    routes: {
-      '?id=:id': 'toIndex',
-      'index?id=:id': 'index'
-    },
+  return Marionette.ItemView.extend({
+    template: Templates['overview-measures'],
 
-    initialize: function (options) {
-      this.app = options.app;
-    },
-
-    toIndex: function (id) {
-      this.navigate('index?id=' + encodeURIComponent(id), { replace: true });
-    },
-
-    index: function (id) {
-      this.app.controller.index(id);
+    modelEvents: {
+      'change': 'render'
     }
   });
 

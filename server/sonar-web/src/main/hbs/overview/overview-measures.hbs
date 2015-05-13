@@ -1,3 +1,5 @@
+{{log this}}
+
 <div class="panel panel-horizontal">
 
   <div class="panel panel-vertical">
@@ -19,10 +21,10 @@
     <div class="display-inline-block text-middle" style="padding-left: 15px; padding-right: 15px;">
       <h2 style="margin-bottom: 15px;">Lines of Code</h2>
       <div class="display-inline-block text-middle" style="width: 150px; padding-right: 15px;">
-        <a style="font-size: 24px; font-weight: 300; margin-top: 10px;">171,131</a>
+        <a style="font-size: 24px; font-weight: 300; margin-top: 10px;">{{formatMeasure ncloc 'INT'}}</a>
       </div>
       <div class="display-inline-block text-middle" style="padding: 10px 15px; border: 1px solid #4b9fd5; border-left-width: 4px;">
-        <span style="font-size: 24px; font-weight: 300;">+11,458</span>
+        <span style="font-size: 24px; font-weight: 300;"><span class="text-info">Δ</span> {{formatMeasureVariation nclocLeak 'INT'}}</span>
       </div>
     </div>
   </div>
@@ -30,38 +32,38 @@
   <div class="panel panel-vertical">
     <div class="display-inline-block text-middle" style="padding-right: 45px;">
       <svg width="160" height="63" viewBox="0 0 160 63" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;">
-    <g>
-        <path d="M3.42107,59.7865L18.031,55.4697L32.34,52.8252L48.2523,28.3733L61.2093,39.0628L78.1198,38.7959L123.7,22.9304L154.319,30.6247" style="fill:none;stroke-width:1.33px;stroke:rgb(212,51,63);"/>
-        <circle cx="3" cy="59.8899" r="3" style="fill:rgb(212,51,63);"/>
-        <circle cx="17.9343" cy="55.4934" r="3" style="fill:rgb(212,51,63);"/>
-        <circle cx="32.2982" cy="52.7069" r="3" style="fill:rgb(212,51,63);"/>
-        <circle cx="48.1955" cy="28.5142" r="3" style="fill:rgb(212,51,63);"/>
-        <circle cx="61.1946" cy="39.1172" r="3" style="fill:rgb(212,51,63);"/>
-        <circle cx="78.1184" cy="38.7688" r="3" style="fill:rgb(212,51,63);"/>
-        <circle cx="123.564" cy="23" r="3" style="fill:rgb(212,51,63);"/>
-        <circle cx="154.192" cy="30.5921" r="3" style="fill:rgb(212,51,63);"/>
-    </g>
-    <g>
-        <path d="M3.42107,59.7865L18.031,51.3417L32.2365,51.817L48.2789,35.2034L61.5198,26.807L78.3535,31.0877L123.37,2.48573L153.816,10.2568" style="fill:none;stroke-width:1.33px;stroke:rgb(64,122,170);"/>
-        <circle cx="3" cy="59.8899" r="3" style="fill:rgb(64,122,170);"/>
-        <circle cx="17.9343" cy="51.4934" r="3" style="fill:rgb(64,122,170);"/>
-        <circle cx="32.2982" cy="51.7069" r="3" style="fill:rgb(64,122,170);"/>
-        <circle cx="48.1955" cy="35.5142" r="3" style="fill:rgb(64,122,170);"/>
-        <circle cx="61.1946" cy="27.1172" r="3" style="fill:rgb(64,122,170);"/>
-        <circle cx="78.1184" cy="30.7688" r="3" style="fill:rgb(64,122,170);"/>
-        <circle cx="123.564" cy="3" r="3" style="fill:rgb(64,122,170);"/>
-        <circle cx="154.192" cy="10.5921" r="3" style="fill:rgb(64,122,170);"/>
-    </g>
-</svg>
+        <g>
+            <path d="M3.42107,59.7865L18.031,55.4697L32.34,52.8252L48.2523,28.3733L61.2093,39.0628L78.1198,38.7959L123.7,22.9304L154.319,30.6247" style="fill:none;stroke-width:1.33px;stroke:#b88a10;"/>
+            <circle cx="3" cy="59.8899" r="3" style="fill:#b88a10;"/>
+            <circle cx="17.9343" cy="55.4934" r="3" style="fill:#b88a10;"/>
+            <circle cx="32.2982" cy="52.7069" r="3" style="fill:#b88a10;"/>
+            <circle cx="48.1955" cy="28.5142" r="3" style="fill:#b88a10;"/>
+            <circle cx="61.1946" cy="39.1172" r="3" style="fill:#b88a10;"/>
+            <circle cx="78.1184" cy="38.7688" r="3" style="fill:#b88a10;"/>
+            <circle cx="123.564" cy="23" r="3" style="fill:#b88a10;"/>
+            <circle cx="154.192" cy="30.5921" r="3" style="fill:#b88a10;"/>
+        </g>
+        <g>
+            <path d="M3.42107,59.7865L18.031,51.3417L32.2365,51.817L48.2789,35.2034L61.5198,26.807L78.3535,31.0877L123.37,2.48573L153.816,10.2568" style="fill:none;stroke-width:1.33px;stroke:rgb(64,122,170);"/>
+            <circle cx="3" cy="59.8899" r="3" style="fill:rgb(64,122,170);"/>
+            <circle cx="17.9343" cy="51.4934" r="3" style="fill:rgb(64,122,170);"/>
+            <circle cx="32.2982" cy="51.7069" r="3" style="fill:rgb(64,122,170);"/>
+            <circle cx="48.1955" cy="35.5142" r="3" style="fill:rgb(64,122,170);"/>
+            <circle cx="61.1946" cy="27.1172" r="3" style="fill:rgb(64,122,170);"/>
+            <circle cx="78.1184" cy="30.7688" r="3" style="fill:rgb(64,122,170);"/>
+            <circle cx="123.564" cy="3" r="3" style="fill:rgb(64,122,170);"/>
+            <circle cx="154.192" cy="10.5921" r="3" style="fill:rgb(64,122,170);"/>
+        </g>
+      </svg>
     </div>
     <div class="display-inline-block text-middle" style="padding-left: 15px; padding-right: 15px;">
       <h2 style="margin-bottom: 15px;">Issues</h2>
       <div class="display-inline-block text-middle" style="width: 150px; padding-right: 15px;">
-        <a style="font-size: 24px; font-weight: 300; margin-top: 10px;">1,653</a>
+        <a style="font-size: 24px; font-weight: 300; margin-top: 10px;">{{formatMeasure issues 'INT'}}</a>
       </div>
       <div class="display-inline-block text-middle" style="padding: 10px 15px; border: 1px solid #4b9fd5; border-left-width: 4px;">
-        <span style="font-size: 24px; font-weight: 300; margin-right: 30px;">+104</span>
-        <a class="text-danger" style="font-size: 24px; font-weight: 300;">466</a> <span class="note">new</span>
+        <span style="font-size: 24px; font-weight: 300; margin-right: 30px;"><span class="text-info">Δ</span> {{formatMeasureVariation issuesLeak 'INT'}}</span>
+        <a class="text-leak" style="font-size: 24px; font-weight: 300;">{{formatMeasure newIssuesLeak 'INT'}}</a> <span class="note little-spacer-left">new</span>
       </div>
     </div>
   </div>
@@ -69,6 +71,17 @@
   <div class="panel panel-vertical">
     <div class="display-inline-block text-middle" style="padding-right: 45px;">
       <svg width="160" height="63" viewBox="0 0 160 63" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;">
+        <g>
+            <path d="M3.42107,59.7865L18.031,55.4697L32.34,52.8252L48.2523,28.3733L61.2093,39.0628L78.1198,38.7959L123.7,22.9304L154.319,30.6247" style="fill:none;stroke-width:1.33px;stroke:#b88a10;"/>
+            <circle cx="3" cy="59.8899" r="3" style="fill:#b88a10;"/>
+            <circle cx="17.9343" cy="55.4934" r="3" style="fill:#b88a10;"/>
+            <circle cx="32.2982" cy="52.7069" r="3" style="fill:#b88a10;"/>
+            <circle cx="48.1955" cy="28.5142" r="3" style="fill:#b88a10;"/>
+            <circle cx="61.1946" cy="39.1172" r="3" style="fill:#b88a10;"/>
+            <circle cx="78.1184" cy="38.7688" r="3" style="fill:#b88a10;"/>
+            <circle cx="123.564" cy="23" r="3" style="fill:#b88a10;"/>
+            <circle cx="154.192" cy="30.5921" r="3" style="fill:#b88a10;"/>
+        </g>
         <g>
             <path d="M3.42107,59.7865L18.031,51.3417L32.2365,51.817L48.2789,35.2034L61.5198,26.807L78.3535,31.0877L123.37,2.48573L153.816,10.2568" style="fill:none;stroke-width:1.33px;stroke:rgb(64,122,170);"/>
             <circle cx="3" cy="59.8899" r="3" style="fill:rgb(64,122,170);"/>
@@ -85,11 +98,12 @@
     <div class="display-inline-block text-middle" style="padding-left: 15px; padding-right: 15px;">
       <h2 style="margin-bottom: 15px;">Technical Debt</h2>
       <div class="display-inline-block text-middle" style="width: 150px; padding-right: 15px;">
-        <a style="font-size: 24px; font-weight: 300; margin-top: 10px; margin-right: 5px;"><span class="rating rating-A">A</span></a>
-        <a style="font-size: 24px; font-weight: 300;">44d</a>
+        <a style="font-size: 24px; font-weight: 300; margin-top: 10px; margin-right: 5px;"><span class="rating rating-{{formatMeasure rating 'RATING'}}">{{formatMeasure rating 'RATING'}}</span></a>
+        <a style="font-size: 24px; font-weight: 300;">{{formatMeasure debt 'WORK_DUR'}}</a>
       </div>
       <div class="display-inline-block text-middle" style="padding: 10px 15px; border: 1px solid #4b9fd5; border-left-width: 4px;">
-        <span style="font-size: 24px; font-weight: 300;">+4d 5h</span>
+        <span style="font-size: 24px; font-weight: 300; margin-right: 30px;"><span class="text-info">Δ</span> {{formatMeasureVariation debtLeak 'WORK_DUR'}}</span>
+        <a class="text-leak" style="font-size: 24px; font-weight: 300;">{{formatMeasure newDebtLeak 'WORK_DUR'}}</a> <span class="note little-spacer-left">new</span>
       </div>
     </div>
   </div>
@@ -98,15 +112,15 @@
     <div class="display-inline-block text-middle" style="padding-right: 45px;">
       <svg width="160" height="63" viewBox="0 0 160 63" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;">
         <g>
-            <path d="M3.42107,59.7865L18.031,55.4697L32.34,52.8252L48.2523,28.3733L61.4131,21.2165L78.1198,38.7959L123.706,8.18563L154.647,3.79394" style="fill:none;stroke-width:1.33px;stroke:rgb(133,187,67);"/>
-            <circle cx="3" cy="59.8899" r="3" style="fill:rgb(133,187,67);"/>
-            <circle cx="17.9343" cy="55.4934" r="3" style="fill:rgb(133,187,67);"/>
-            <circle cx="32.2982" cy="52.7069" r="3" style="fill:rgb(133,187,67);"/>
-            <circle cx="48.1955" cy="28.5142" r="3" style="fill:rgb(133,187,67);"/>
-            <circle cx="61.1946" cy="21.1172" r="3" style="fill:rgb(133,187,67);"/>
-            <circle cx="78.1184" cy="38.7688" r="3" style="fill:rgb(133,187,67);"/>
-            <circle cx="123.564" cy="8" r="3" style="fill:rgb(133,187,67);"/>
-            <circle cx="154.192" cy="3.59214" r="3" style="fill:rgb(133,187,67);"/>
+            <path d="M3.42107,59.7865L18.031,55.4697L32.34,52.8252L48.2523,28.3733L61.4131,21.2165L78.1198,38.7959L123.706,8.18563L154.647,3.79394" style="fill:none;stroke-width:1.33px;stroke:#b88a10;"/>
+            <circle cx="3" cy="59.8899" r="3" style="fill:#b88a10;"/>
+            <circle cx="17.9343" cy="55.4934" r="3" style="fill:#b88a10;"/>
+            <circle cx="32.2982" cy="52.7069" r="3" style="fill:#b88a10;"/>
+            <circle cx="48.1955" cy="28.5142" r="3" style="fill:#b88a10;"/>
+            <circle cx="61.1946" cy="21.1172" r="3" style="fill:#b88a10;"/>
+            <circle cx="78.1184" cy="38.7688" r="3" style="fill:#b88a10;"/>
+            <circle cx="123.564" cy="8" r="3" style="fill:#b88a10;"/>
+            <circle cx="154.192" cy="3.59214" r="3" style="fill:#b88a10;"/>
         </g>
         <g>
             <path d="M3.42107,59.7865L18.031,51.3417L32.2365,51.817L48.2789,35.2034L61.5198,26.807L78.3535,31.0877L123.778,12.9102L154.44,10.7138" style="fill:none;stroke-width:1.33px;stroke:rgb(64,122,170);"/>
@@ -124,11 +138,11 @@
     <div class="display-inline-block text-middle" style="padding-left: 15px; padding-right: 15px;">
       <h2 style="margin-bottom: 15px;">Coverage</h2>
       <div class="display-inline-block text-middle" style="width: 150px; padding-right: 15px;">
-        <a style="font-size: 24px; font-weight: 300; margin-top: 10px;">84.6%</a>
+        <a style="font-size: 24px; font-weight: 300; margin-top: 10px;">{{formatMeasure coverage 'PERCENT'}}</a>
       </div>
       <div class="display-inline-block text-middle" style="padding: 10px 15px; border: 1px solid #4b9fd5; border-left-width: 4px;">
-        <span style="font-size: 24px; font-weight: 300; margin-right: 30px;">+1.4%</span>
-        <a class="text-success" style="font-size: 24px; font-weight: 300;">90.6%</a> <span class="note">on new code</span>
+        <span style="font-size: 24px; font-weight: 300; margin-right: 30px;"><span class="text-info">Δ</span> {{formatMeasureVariation coverageLeak 'PERCENT'}}</span>
+        <a class="text-leak" style="font-size: 24px; font-weight: 300;">{{formatMeasure newCoverageLeak 'PERCENT'}}</a> <span class="note little-spacer-left">on new code</span>
       </div>
       <div class="display-inline-block text-middle" style="padding-left: 15px;">
 
@@ -155,10 +169,10 @@
     <div class="display-inline-block text-middle" style="padding-left: 15px; padding-right: 15px;">
       <h2 style="margin-bottom: 15px;">Duplications</h2>
       <div class="display-inline-block text-middle" style="width: 150px; padding-right: 15px;">
-        <a style="font-size: 24px; font-weight: 300; margin-top: 10px;">1.0%</a>
+        <a style="font-size: 24px; font-weight: 300; margin-top: 10px;">{{formatMeasure duplications 'PERCENT'}}</a>
       </div>
       <div class="display-inline-block text-middle" style="padding: 10px 15px; border: 1px solid #4b9fd5; border-left-width: 4px;">
-        <span style="font-size: 24px; font-weight: 300;">+0.1%</span>
+        <span style="font-size: 24px; font-weight: 300;"><span class="text-info">Δ</span> {{formatMeasureVariation duplicationsLeak 'PERCENT'}}</span>
       </div>
     </div>
   </div>

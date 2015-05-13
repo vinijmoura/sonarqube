@@ -1,0 +1,24 @@
+<div style="padding: 20px; background: #f3f3f3; min-height: calc(100vh - 60px - 30px - 60px); box-sizing: border-box;">
+  <h2 style="margin-bottom: 20px;">Quality Gate</h2>
+  <ul>
+    {{#each gateDetails.conditions}}
+      {{#notEq level 'OK'}}
+        <li style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #e3e3e3;">
+          <table>
+            <tr>
+              <td class="text-middle" style="padding-right: 10px;">
+                <span class="alert_{{level}}" style="font-size: 20px; padding: 0 6px;">{{actual}}</span>
+              </td>
+              <td class="text-middle">
+                <p>{{metric}}</p>
+                {{#if period}}<p>{{period}}</p>{{/if}}
+              </td>
+            </tr>
+          </table>
+        </li>
+      {{/notEq}}
+    {{/each}}
+  </ul>
+
+  <div class="text-center" style="margin-top: 20px;"><a>Show All</a></div>
+</div>
