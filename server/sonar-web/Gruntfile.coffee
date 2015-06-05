@@ -143,10 +143,8 @@ module.exports = (grunt) ->
       casper:
         tasks: [
           'casper:apiDocumentation'
-          'casper:application'
           'casper:codingRules'
           'casper:issueFilterWidget'
-          'casper:handlebarsHelpers'
           'casper:issues'
           'casper:markdown'
           'casper:nav'
