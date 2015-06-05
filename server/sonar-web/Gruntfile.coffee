@@ -347,16 +347,26 @@ module.exports = (grunt) ->
 
 
     unzip:
-      'target/js-coverage': 'target/coverage.zip'
+      'target/js-coverage/it': 'target/coverage.zip'
 
 
     replace:
       lcov:
-        src: 'target/js-coverage/lcov.info'
-        dest: 'target/js-coverage/lcov.info'
+        src: 'target/js-coverage/it/lcov.info'
+        dest: 'target/js-coverage/it/lcov.info'
         replacements: [
           { from: '/build/', to: '/src/main/' }
         ]
+
+    karma:
+      unit:
+        configFile: 'karma.conf.js'
+        preprocessors: {}
+        reporters: ['progress']
+        port: expressPort
+      unitCoverage:
+        configFile: 'karma.conf.js'
+        port: expressPort
 
 
     jshint:
@@ -400,11 +410,11 @@ module.exports = (grunt) ->
       ['copy:assets-css', 'copy:assets-js', 'concurrent:build']
 
   grunt.registerTask 'test-suffix',
-      ['express:test', 'concurrent:casper']
+      ['karma:unit', 'express:test', 'concurrent:casper']
 
   grunt.registerTask 'coverage-suffix',
-      ['express:testCoverage', 'curl:resetCoverage', 'concurrent:casper', 'curl:downloadCoverage', 'unzip',
-       'replace:lcov']
+      ['karma:unitCoverage', 'express:testCoverage', 'curl:resetCoverage', 'concurrent:casper', 'curl:downloadCoverage',
+       'unzip', 'replace:lcov']
 
   grunt.registerTask 'build-app', (app) ->
     grunt.option 'app', app

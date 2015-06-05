@@ -14,8 +14,9 @@
   <properties>
     <!-- self-analysis -->
     <sonar.sources>src/main/js,src/main/less</sonar.sources>
-    <sonar.exclusions>src/main/js/libs/third-party/**/*,src/main/js/libs/require.js</sonar.exclusions>
-    <sonar.javascript.lcov.reportPath>target/js-coverage/lcov.info</sonar.javascript.lcov.reportPath>
+    <sonar.exclusions>src/main/js/libs/third-party/**/*</sonar.exclusions>
+    <sonar.javascript.lcov.reportPath>target/js-coverage/unit/lcov.info</sonar.javascript.lcov.reportPath>
+    <sonar.javascript.lcov.itReportPath>target/js-coverage/it/lcov.info</sonar.javascript.lcov.itReportPath>
     <grunt.arguments>maven-build-skip-tests-${skipWebTests}-${jsCoverage} --port=${jsTestPort} --no-color</grunt.arguments>
   </properties>
 
