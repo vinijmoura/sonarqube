@@ -1,7 +1,7 @@
 // Karma configuration
 // Generated on Fri Jun 05 2015 15:17:30 GMT+0200 (CEST)
 
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -62,14 +62,21 @@ module.exports = function(config) {
       'src/main/js/libs/dashboard.js',
       'src/main/js/libs/recent-history.js',
       'src/main/js/libs/third-party/require.js',
-      
-      'src/test/unit/**/*.js'
+
+      // requirejs-tests bootstrapper
+      'src/test/test-main.js',
+
+      // sources
+      { pattern: 'src/main/js/**/*.js', included: false },
+
+      // tests
+      { pattern: 'src/test/unit/**/*-spec.js', included: false },
+      { pattern: 'src/test/e2e/**/*-spec.js', included: false }
     ],
 
 
     // list of files to exclude
-    exclude: [
-    ],
+    exclude: [],
 
 
     // preprocess matching files before serving them to the browser
@@ -88,8 +95,8 @@ module.exports = function(config) {
 
 
     coverageReporter: {
-      type : 'lcov',
-      dir : 'target/js-coverage',
+      type: 'lcov',
+      dir: 'target/js-coverage',
       subdir: 'unit'
     },
 
