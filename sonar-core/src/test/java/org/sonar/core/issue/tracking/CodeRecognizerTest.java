@@ -19,6 +19,8 @@
  */
 package org.sonar.core.issue.tracking;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -44,11 +46,11 @@ public class CodeRecognizerTest {
   }
 
   private static LineHashSequence seq(String text) {
-    String[] array = new String[text.length()];
+    List<String> hashes = new ArrayList<>();
     for (int i = 0; i < text.length(); i++) {
-      array[i] = "" + text.charAt(i);
+      hashes.add("" + text.charAt(i));
     }
-    return new LineHashSequence(array);
+    return new LineHashSequence(hashes);
   }
 
 }

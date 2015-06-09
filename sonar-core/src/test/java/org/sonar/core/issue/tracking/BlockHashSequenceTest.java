@@ -21,23 +21,22 @@ package org.sonar.core.issue.tracking;
 
 import org.junit.Test;
 
-import static org.apache.commons.codec.digest.DigestUtils.md5Hex;
+import static com.google.common.collect.Iterators.forArray;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BlockHashSequenceTest {
 
   @Test
   public void test() {
-    BlockHashSequence a = new BlockHashSequence(new LineHashSequence(new String[] {md5Hex("line0"), md5Hex("line1"), md5Hex("line2")}), 1);
-    BlockHashSequence b = new BlockHashSequence(new LineHashSequence(new String[] {md5Hex("line0"), md5Hex("line1"), md5Hex("line2"), md5Hex("line3")}), 1);
+    BlockHashSequence a = new BlockHashSequence(LineHashSequence.createForLines(forArray("line0", "line1", "line2")), 1);
+    BlockHashSequence b = new BlockHashSequence(LineHashSequence.createForLines(forArray("line0", "line1", "line2", "line3")), 1);
 
     assertThat(a.getBlockHashForLine(1)).isEqualTo(b.getBlockHashForLine(1));
     assertThat(a.getBlockHashForLine(2)).isEqualTo(b.getBlockHashForLine(2));
     assertThat(a.getBlockHashForLine(3)).isNotEqualTo(b.getBlockHashForLine(3));
 
-    BlockHashSequence c = new BlockHashSequence(new LineHashSequence(new String[] {md5Hex("line-1"), md5Hex("line0"), md5Hex("line1"), md5Hex("line2"), md5Hex("line3")}), 1);
+    BlockHashSequence c = new BlockHashSequence(LineHashSequence.createForLines(forArray("line-1", "line0", "line1", "line2", "line3")), 1);
     assertThat(a.getBlockHashForLine(1)).isNotEqualTo(c.getBlockHashForLine(2));
     assertThat(a.getBlockHashForLine(2)).isEqualTo(c.getBlockHashForLine(3));
   }
-
 }

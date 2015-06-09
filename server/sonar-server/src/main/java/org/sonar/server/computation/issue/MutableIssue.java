@@ -17,26 +17,35 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.core.issue.db;
+package org.sonar.server.computation.issue;
 
-import java.util.List;
 import java.util.Set;
+import javax.annotation.Nullable;
+import org.sonar.api.utils.Duration;
 
-public interface IssueMapper {
+public interface MutableIssue<SELF extends MutableIssue> extends Issue {
 
-  IssueDto selectByKey(String key);
+  SELF setIsNew(boolean b);
 
-  List<IssueDto> selectOpenByComponentUuid(String componentUuid);
+  SELF setAssigneeLogin(@Nullable String s);
 
-  Set<String> selectComponentUuidsOfOpenIssuesForProjectUuid(String projectUuid);
+  SELF setSeverity(String s);
 
-  List<IssueDto> selectByKeys(List<String> keys);
+  SELF setOverriddenSeverity(boolean b);
 
-  List<IssueDto> selectByActionPlan(String actionPlan);
+  SELF setMessage(@Nullable String s);
 
-  void insert(IssueDto issue);
+  SELF setDebt(@Nullable Duration d);
 
-  int update(IssueDto issue);
+  SELF setEffortToFix(@Nullable Double d);
 
-  int updateIfBeforeSelectedDate(IssueDto issue);
+  SELF setUuid(String s);
+
+  SELF setResolution(@Nullable String s);
+
+  SELF setStatus(String s);
+
+  SELF setLineHash(@Nullable String s);
+
+  SELF setTags(Set<String> s);
 }

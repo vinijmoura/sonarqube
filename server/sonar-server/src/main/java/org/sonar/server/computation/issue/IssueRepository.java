@@ -17,26 +17,15 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.core.issue.db;
+package org.sonar.server.computation.issue;
 
-import java.util.List;
-import java.util.Set;
+import java.util.Collection;
+import org.sonar.server.computation.component.Component;
 
-public interface IssueMapper {
+public interface IssueRepository {
 
-  IssueDto selectByKey(String key);
+  Collection<Issue> getForComponent(Component c);
 
-  List<IssueDto> selectOpenByComponentUuid(String componentUuid);
+  void addOrUpdate(Component component, Issue issue);
 
-  Set<String> selectComponentUuidsOfOpenIssuesForProjectUuid(String projectUuid);
-
-  List<IssueDto> selectByKeys(List<String> keys);
-
-  List<IssueDto> selectByActionPlan(String actionPlan);
-
-  void insert(IssueDto issue);
-
-  int update(IssueDto issue);
-
-  int updateIfBeforeSelectedDate(IssueDto issue);
 }

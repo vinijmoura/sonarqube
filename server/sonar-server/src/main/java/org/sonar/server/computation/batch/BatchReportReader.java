@@ -36,6 +36,7 @@ public interface BatchReportReader {
 
   List<BatchReport.Issue> readComponentIssues(int componentRef);
 
+  // TODO to be removed when issue tracking is in CE
   BatchReport.Issues readDeletedComponentIssues(int deletedComponentRef);
 
   List<BatchReport.Duplication> readComponentDuplications(int componentRef);

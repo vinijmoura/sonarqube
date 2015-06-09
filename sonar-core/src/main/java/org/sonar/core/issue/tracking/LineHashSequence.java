@@ -20,9 +20,14 @@
 package org.sonar.core.issue.tracking;
 
 import com.google.common.base.Strings;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import javax.annotation.Nullable;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * Sequence of hash of lines for a given file
@@ -34,14 +39,14 @@ public class LineHashSequence {
   /**
    * Hashes of lines. Line 1 is at index 0. No null elements.
    */
-  private final String[] hashes;
+  private final List<String> hashes;
   private final Map<String, int[]> linesByHash;
 
-  public LineHashSequence(String[] hashes) {
+  public LineHashSequence(List<String> hashes) {
     this.hashes = hashes;
-    this.linesByHash = new HashMap<>(hashes.length);
-    for (int line = 1; line <= hashes.length; line++) {
-      String hash = hashes[line - 1];
+    this.linesByHash = new HashMap<>(hashes.size());
+    for (int line = 1; line <= hashes.size(); line++) {
+      String hash = hashes.get(line - 1);
       int[] lines = linesByHash.get(hash);
       linesByHash.put(hash, appendLineTo(line, lines));
     }
@@ -51,14 +56,14 @@ public class LineHashSequence {
    * Number of lines
    */
   public int length() {
-    return hashes.length;
+    return hashes.size();
   }
 
   /**
    * Checks if the line, starting with 1, is defined.
    */
   public boolean hasLine(int line) {
-    return 0 < line && line <= hashes.length;
+    return 0 < line && line <= hashes.size();
   }
 
   /**
@@ -74,17 +79,20 @@ public class LineHashSequence {
    * is the line does not exist.
    */
   public String getHashForLine(int line) {
-    return Strings.nullToEmpty(hashes[line - 1]);
+    if (line > 0 && line <= hashes.size()) {
+      return Strings.nullToEmpty(hashes.get(line - 1));
+    }
+    return "";
   }
 
-  String[] getHashes() {
+  List<String> getHashes() {
     return hashes;
   }
 
   private static int[] appendLineTo(int line, @Nullable int[] to) {
     int[] result;
     if (to == null) {
-      result = new int[] {line};
+      result = new int[]{line};
     } else {
       result = new int[to.length + 1];
       System.arraycopy(to, 0, result, 0, to.length);
@@ -94,4 +102,21 @@ public class LineHashSequence {
   }
 
 
+  public static LineHashSequence createForLines(Iterator<String> lines) {
+    List<String> hashes = new ArrayList<>();
+    while (lines.hasNext()) {
+      String line = lines.next();
+      hashes.add(hash(line));
+    }
+    return new LineHashSequence(hashes);
+  }
+
+  // FIXME duplicates ComputeFileSourceData
+  private static String hash(String line) {
+    String reducedLine = StringUtils.replaceChars(line, "\t ", "");
+    if (reducedLine.isEmpty()) {
+      return "";
+    }
+    return DigestUtils.md5Hex(reducedLine);
+  }
 }

@@ -19,21 +19,41 @@
  */
 package org.sonar.core.issue.tracking;
 
-import javax.annotation.CheckForNull;
-import org.sonar.api.rule.RuleKey;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
-public interface Trackable {
+public abstract class LazyInput<ISSUE extends Trackable> implements Input<ISSUE> {
 
-  /**
-   * The line index, starting with 1. Zero means that
-   * issue does not relate to a line (file issue for example).
-   */
-  int getLine();
+  private List<ISSUE> issues;
+  private LineHashSequence lineHashSeq;
+  private BlockHashSequence blockHashSeq;
 
-  String getMessage();
+  @Override
+  public LineHashSequence getLineHashSequence() {
+    if (lineHashSeq == null) {
+      lineHashSeq = LineHashSequence.createForLines(loadSourceLines());
+    }
+    return lineHashSeq;
+  }
 
-  @CheckForNull
-  String getLineHash();
+  @Override
+  public BlockHashSequence getBlockHashSequence() {
+    if (blockHashSeq == null) {
+      blockHashSeq = BlockHashSequence.create(getLineHashSequence());
+    }
+    return blockHashSeq;
+  }
 
-  RuleKey getRuleKey();
+  @Override
+  public Collection<ISSUE> getIssues() {
+    if (issues == null) {
+      issues = loadIssues();
+    }
+    return issues;
+  }
+
+  protected abstract Iterator<String> loadSourceLines();
+
+  protected abstract List<ISSUE> loadIssues();
 }

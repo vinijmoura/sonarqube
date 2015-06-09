@@ -17,23 +17,56 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.core.issue.tracking;
+package org.sonar.server.computation.issue;
 
+import java.util.Set;
 import javax.annotation.CheckForNull;
 import org.sonar.api.rule.RuleKey;
+import org.sonar.api.utils.Duration;
+import org.sonar.core.issue.tracking.Trackable;
 
-public interface Trackable {
+public interface Issue extends Trackable {
+
+  boolean isNew();
+
+  RuleKey getRuleKey();
 
   /**
-   * The line index, starting with 1. Zero means that
-   * issue does not relate to a line (file issue for example).
+   * FIXME document 0 vs 1
    */
   int getLine();
 
+  // FIXME html or markdown ?
   String getMessage();
 
-  @CheckForNull
-  String getLineHash();
+  /**
+   * Returns MAJOR by default.
+   */
+  String getSeverity();
 
-  RuleKey getRuleKey();
+  boolean isOverriddenSeverity();
+
+  @CheckForNull
+  String getAssigneeLogin();
+
+  @CheckForNull
+  Duration getDebt();
+
+  @CheckForNull
+  Double getEffortToFix();
+
+  /**
+   * Return the issue uuid only when {@link xxx} has been executed, otherwise it will throw an exception.
+   */
+  String getUuid();
+
+  @CheckForNull
+  String getResolution();
+
+  /**
+   * Never null, by default it's {@link org.sonar.api.issue.Issue#STATUS_OPEN}.
+   */
+  String getStatus();
+
+  Set<String> getTags();
 }

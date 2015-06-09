@@ -19,14 +19,17 @@
  */
 package org.sonar.core.issue.tracking;
 
+import java.util.List;
+
 public class BlockHashSequence {
 
+  public static final int DEFAULT_HALF_BLOCK_SIZE = 5;
   /**
    * Hashes of blocks around lines. Line 1 is at index 0.
    */
   private final int[] blockHashes;
 
-  public BlockHashSequence(LineHashSequence lineHashSequence, int halfBlockSize) {
+  BlockHashSequence(LineHashSequence lineHashSequence, int halfBlockSize) {
     this.blockHashes = new int[lineHashSequence.length()];
 
     BlockHashFactory blockHashFactory = new BlockHashFactory(lineHashSequence.getHashes(), halfBlockSize);
@@ -41,7 +44,10 @@ public class BlockHashSequence {
         blockHashFactory.add(0);
       }
     }
+  }
 
+  public static BlockHashSequence create(LineHashSequence lineHashSequence) {
+    return new BlockHashSequence(lineHashSequence, DEFAULT_HALF_BLOCK_SIZE);
   }
 
   /**
@@ -57,14 +63,14 @@ public class BlockHashSequence {
     private final int power;
     private int hash = 0;
 
-    public BlockHashFactory(String[] hashes, int halfBlockSize) {
+    public BlockHashFactory(List<String> hashes, int halfBlockSize) {
       int pow = 1;
       for (int i = 0; i < halfBlockSize * 2; i++) {
         pow = pow * PRIME_BASE;
       }
       this.power = pow;
-      for (int i = 1; i <= Math.min(hashes.length, halfBlockSize + 1); i++) {
-        add(hashes[i - 1].hashCode());
+      for (int i = 1; i <= Math.min(hashes.size(), halfBlockSize + 1); i++) {
+        add(hashes.get(i - 1).hashCode());
       }
     }
 

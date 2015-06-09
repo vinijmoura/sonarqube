@@ -24,6 +24,7 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import java.util.ArrayList;
 import java.util.Collection;
+import org.sonar.api.rule.RuleKey;
 
 public class Tracker<RAW extends Trackable, BASE extends Trackable> {
 
@@ -86,7 +87,7 @@ public class Tracker<RAW extends Trackable, BASE extends Trackable> {
 
   private void relocateManualIssues(Input<RAW> rawInput, Tracking<RAW, BASE> tracking) {
     for (BASE base : tracking.untrackedBases()) {
-      if (base.isManual()) {
+      if (base.getRuleKey().isManual()) {
         if (base.getLine() == 0) {
           // no need to relocate. Location is unchanged.
           tracking.associateManualIssueToLine(base, 0);
@@ -107,6 +108,7 @@ public class Tracker<RAW extends Trackable, BASE extends Trackable> {
     }
   }
 
+
   private interface SearchKey {
   }
 
@@ -114,8 +116,11 @@ public class Tracker<RAW extends Trackable, BASE extends Trackable> {
     SearchKey create(Trackable trackable);
   }
 
+
+
   private static class LineAndLineHashKey implements SearchKey {
-    private final String ruleKey, lineHash;
+    private final RuleKey ruleKey;
+    private final String lineHash;
     private final int line;
 
     LineAndLineHashKey(Trackable trackable) {
@@ -134,11 +139,10 @@ public class Tracker<RAW extends Trackable, BASE extends Trackable> {
       if (line != that.line) {
         return false;
       }
-      if (!ruleKey.equals(that.ruleKey)) {
+      if (!lineHash.equals(that.lineHash)) {
         return false;
       }
-      return lineHash.equals(that.lineHash);
-
+      return ruleKey.equals(that.ruleKey);
     }
 
     @Override
@@ -158,8 +162,12 @@ public class Tracker<RAW extends Trackable, BASE extends Trackable> {
     }
   }
 
+
+
+
   private static class LineHashAndMessageKey implements SearchKey {
-    private final String ruleKey, message, lineHash;
+    private final RuleKey ruleKey;
+    private final String message, lineHash;
 
     LineHashAndMessageKey(Trackable trackable) {
       this.ruleKey = trackable.getRuleKey();
@@ -177,10 +185,10 @@ public class Tracker<RAW extends Trackable, BASE extends Trackable> {
       if (!lineHash.equals(that.lineHash)) {
         return false;
       }
-      if (!ruleKey.equals(that.ruleKey)) {
+      if (!message.equals(that.message)) {
         return false;
       }
-      return message.equals(that.message);
+      return ruleKey.equals(that.ruleKey);
     }
 
     @Override
@@ -192,6 +200,9 @@ public class Tracker<RAW extends Trackable, BASE extends Trackable> {
     }
   }
 
+
+
+
   private enum LineHashAndMessagekeyFactory implements SearchKeyFactory {
     INSTANCE;
     @Override
@@ -201,7 +212,8 @@ public class Tracker<RAW extends Trackable, BASE extends Trackable> {
   }
 
   private static class LineAndMessageKey implements SearchKey {
-    private final String ruleKey, message;
+    private final RuleKey ruleKey;
+    private final String message;
     private final int line;
 
     LineAndMessageKey(Trackable trackable) {
@@ -220,10 +232,10 @@ public class Tracker<RAW extends Trackable, BASE extends Trackable> {
       if (line != that.line) {
         return false;
       }
-      if (!ruleKey.equals(that.ruleKey)) {
+      if (!message.equals(that.message)) {
         return false;
       }
-      return message.equals(that.message);
+      return ruleKey.equals(that.ruleKey);
     }
 
     @Override
@@ -243,8 +255,13 @@ public class Tracker<RAW extends Trackable, BASE extends Trackable> {
     }
   }
 
+
+
+
+
   private static class LineHashKey implements SearchKey {
-    private final String ruleKey, lineHash;
+    private final RuleKey ruleKey;
+    private final String lineHash;
 
     LineHashKey(Trackable trackable) {
       this.ruleKey = trackable.getRuleKey();

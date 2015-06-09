@@ -27,11 +27,17 @@ import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.sonar.api.rule.RuleKey;
 
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TrackerTest {
 
+  public static final RuleKey RULE_SYSTEM_PRINT = RuleKey.of("java", "SystemPrint");
+  public static final RuleKey RULE_UNUSED_LOCAL_VARIABLE = RuleKey.of("java", "UnusedLocalVariable");
+  public static final RuleKey RULE_UNUSED_PRIVATE_METHOD = RuleKey.of("java", "UnusedPrivateMethod");
+  public static final RuleKey RULE_NOT_DESIGNED_FOR_EXTENSION = RuleKey.of("java", "NotDesignedForExtension");
   @Rule
   public ExpectedException thrown = ExpectedException.none();
 
@@ -43,10 +49,10 @@ public class TrackerTest {
   @Test
   public void similar_issues_except_rule_do_not_match() {
     FakeInput baseInput = new FakeInput("H1");
-    baseInput.createIssueOnLine(1, "R1", "msg");
+    baseInput.createIssueOnLine(1, RULE_SYSTEM_PRINT, "msg");
 
     FakeInput rawInput = new FakeInput("H1");
-    Issue raw = rawInput.createIssueOnLine(1, "R2", "msg");
+    Issue raw = rawInput.createIssueOnLine(1, RULE_UNUSED_LOCAL_VARIABLE, "msg");
 
     Tracking<Issue, Issue> tracking = tracker.track(rawInput, baseInput);
     assertThat(tracking.baseFor(raw)).isNull();
@@ -56,10 +62,10 @@ public class TrackerTest {
   @Ignore
   public void different_issues_do_not_match() {
     FakeInput baseInput = new FakeInput("H1");
-    Issue base = baseInput.createIssueOnLine(1, "R1", "msg1");
+    Issue base = baseInput.createIssueOnLine(1, RULE_SYSTEM_PRINT, "msg1");
 
     FakeInput rawInput = new FakeInput("H2", "H3", "H4", "H5", "H6");
-    Issue raw = rawInput.createIssueOnLine(5, "R1", "msg2");
+    Issue raw = rawInput.createIssueOnLine(5, RULE_SYSTEM_PRINT, "msg2");
 
     Tracking<Issue, Issue> tracking = tracker.track(rawInput, baseInput);
     assertThat(tracking.baseFor(raw)).isNull();
@@ -69,12 +75,12 @@ public class TrackerTest {
   @Test
   public void line_hash_has_greater_priority_than_line() {
     FakeInput baseInput = new FakeInput("H1", "H2", "H3");
-    Issue base1 = baseInput.createIssueOnLine(1, "R1", "msg");
-    Issue base2 = baseInput.createIssueOnLine(3, "R1", "msg");
+    Issue base1 = baseInput.createIssueOnLine(1, RULE_SYSTEM_PRINT, "msg");
+    Issue base2 = baseInput.createIssueOnLine(3, RULE_SYSTEM_PRINT, "msg");
 
     FakeInput rawInput = new FakeInput("a", "b", "H1", "H2", "H3");
-    Issue raw1 = rawInput.createIssueOnLine(3, "R1", "msg");
-    Issue raw2 = rawInput.createIssueOnLine(5, "R1", "msg");
+    Issue raw1 = rawInput.createIssueOnLine(3, RULE_SYSTEM_PRINT, "msg");
+    Issue raw2 = rawInput.createIssueOnLine(5, RULE_SYSTEM_PRINT, "msg");
 
     Tracking<Issue, Issue> tracking = tracker.track(rawInput, baseInput);
     assertThat(tracking.baseFor(raw1)).isSameAs(base1);
@@ -87,10 +93,10 @@ public class TrackerTest {
   @Test
   public void no_lines_and_different_messages_match() {
     FakeInput baseInput = new FakeInput("H1", "H2", "H3");
-    Issue base = baseInput.createIssue("R1", "msg1");
+    Issue base = baseInput.createIssue(RULE_SYSTEM_PRINT, "msg1");
 
     FakeInput rawInput = new FakeInput("H10", "H11", "H12");
-    Issue raw = rawInput.createIssue("R1", "msg2");
+    Issue raw = rawInput.createIssue(RULE_SYSTEM_PRINT, "msg2");
 
     Tracking<Issue, Issue> tracking = tracker.track(rawInput, baseInput);
     assertThat(tracking.baseFor(raw)).isSameAs(base);
@@ -99,10 +105,10 @@ public class TrackerTest {
   @Test
   public void similar_issues_except_message_match() {
     FakeInput baseInput = new FakeInput("H1");
-    Issue base = baseInput.createIssueOnLine(1, "R1", "msg1");
+    Issue base = baseInput.createIssueOnLine(1, RULE_SYSTEM_PRINT, "msg1");
 
     FakeInput rawInput = new FakeInput("H1");
-    Issue raw = rawInput.createIssueOnLine(1, "R1", "msg2");
+    Issue raw = rawInput.createIssueOnLine(1, RULE_SYSTEM_PRINT, "msg2");
 
     Tracking<Issue, Issue> tracking = tracker.track(rawInput, baseInput);
     assertThat(tracking.baseFor(raw)).isSameAs(base);
@@ -111,10 +117,10 @@ public class TrackerTest {
   @Test
   public void similar_issues_if_trimmed_messages_match() {
     FakeInput baseInput = new FakeInput("H1");
-    Issue base = baseInput.createIssueOnLine(1, "R1", "   message  ");
+    Issue base = baseInput.createIssueOnLine(1, RULE_SYSTEM_PRINT, "   message  ");
 
     FakeInput rawInput = new FakeInput("H2");
-    Issue raw = rawInput.createIssueOnLine(1, "R1", "message");
+    Issue raw = rawInput.createIssueOnLine(1, RULE_SYSTEM_PRINT, "message");
 
     Tracking<Issue, Issue> tracking = tracker.track(rawInput, baseInput);
     assertThat(tracking.baseFor(raw)).isSameAs(base);
@@ -126,10 +132,10 @@ public class TrackerTest {
   @Test
   public void similar_issues_except_line_hash_match() {
     FakeInput baseInput = new FakeInput("H1");
-    Issue base = baseInput.createIssueOnLine(1, "R1", "msg");
+    Issue base = baseInput.createIssueOnLine(1, RULE_SYSTEM_PRINT, "msg");
 
     FakeInput rawInput = new FakeInput("H2");
-    Issue raw = rawInput.createIssueOnLine(1, "R1", "msg");
+    Issue raw = rawInput.createIssueOnLine(1, RULE_SYSTEM_PRINT, "msg");
 
     Tracking<Issue, Issue> tracking = tracker.track(rawInput, baseInput);
     assertThat(tracking.baseFor(raw)).isSameAs(base);
@@ -138,10 +144,10 @@ public class TrackerTest {
   @Test
   public void similar_issues_except_line_match() {
     FakeInput baseInput = new FakeInput("H1", "H2");
-    Issue base = baseInput.createIssueOnLine(1, "R1", "msg");
+    Issue base = baseInput.createIssueOnLine(1, RULE_SYSTEM_PRINT, "msg");
 
     FakeInput rawInput = new FakeInput("H2", "H1");
-    Issue raw = rawInput.createIssueOnLine(2, "R1", "msg");
+    Issue raw = rawInput.createIssueOnLine(2, RULE_SYSTEM_PRINT, "msg");
 
     Tracking<Issue, Issue> tracking = tracker.track(rawInput, baseInput);
     assertThat(tracking.baseFor(raw)).isSameAs(base);
@@ -153,10 +159,10 @@ public class TrackerTest {
   @Test
   public void only_same_line_hash_match_match() {
     FakeInput baseInput = new FakeInput("H1", "H2");
-    Issue base = baseInput.createIssueOnLine(1, "R1", "msg");
+    Issue base = baseInput.createIssueOnLine(1, RULE_SYSTEM_PRINT, "msg");
 
     FakeInput rawInput = new FakeInput("H3", "H4", "H1");
-    Issue raw = rawInput.createIssueOnLine(3, "R1", "other message");
+    Issue raw = rawInput.createIssueOnLine(3, RULE_SYSTEM_PRINT, "other message");
 
     Tracking<Issue, Issue> tracking = tracker.track(rawInput, baseInput);
     assertThat(tracking.baseFor(raw)).isSameAs(base);
@@ -165,10 +171,10 @@ public class TrackerTest {
   @Test
   public void do_not_fail_if_base_issue_without_line() throws Exception {
     FakeInput baseInput = new FakeInput("H1", "H2");
-    Issue base = baseInput.createIssueOnLine(1, "R1", "msg1");
+    Issue base = baseInput.createIssueOnLine(1, RULE_SYSTEM_PRINT, "msg1");
 
     FakeInput rawInput = new FakeInput("H3", "H4", "H5");
-    Issue raw = rawInput.createIssue("R2", "msg2");
+    Issue raw = rawInput.createIssue(RULE_UNUSED_LOCAL_VARIABLE, "msg2");
 
     Tracking<Issue, Issue> tracking = tracker.track(rawInput, baseInput);
     assertThat(tracking.baseFor(raw)).isNull();
@@ -178,10 +184,10 @@ public class TrackerTest {
   @Test
   public void do_not_fail_if_raw_issue_without_line() throws Exception {
     FakeInput baseInput = new FakeInput("H1", "H2");
-    Issue base = baseInput.createIssue("R1", "msg1");
+    Issue base = baseInput.createIssue(RULE_SYSTEM_PRINT, "msg1");
 
     FakeInput rawInput = new FakeInput("H3", "H4", "H5");
-    Issue raw = rawInput.createIssueOnLine(1, "R2", "msg2");
+    Issue raw = rawInput.createIssueOnLine(1, RULE_UNUSED_LOCAL_VARIABLE, "msg2");
 
     Tracking<Issue, Issue> tracking = tracker.track(rawInput, baseInput);
     assertThat(tracking.baseFor(raw)).isNull();
@@ -191,7 +197,7 @@ public class TrackerTest {
   @Test
   public void fail_if_raw_line_does_not_exist() throws Exception {
     FakeInput baseInput = new FakeInput();
-    FakeInput rawInput = new FakeInput("H1").addIssue(new Issue(200, "H200", "R1", "msg"));
+    FakeInput rawInput = new FakeInput("H1").addIssue(new Issue(200, "H200", RULE_SYSTEM_PRINT, "msg"));
 
     thrown.expect(IllegalArgumentException.class);
     thrown.expectMessage("Issue line is not valid");
@@ -217,8 +223,8 @@ public class TrackerTest {
       "        }",
       "}"
       );
-    Issue base1 = baseInput.createIssueOnLine(7, "R1", "Indentation");
-    Issue base2 = baseInput.createIssueOnLine(11, "R1", "Indentation");
+    Issue base1 = baseInput.createIssueOnLine(7, RULE_SYSTEM_PRINT, "Indentation");
+    Issue base2 = baseInput.createIssueOnLine(11, RULE_SYSTEM_PRINT, "Indentation");
 
     FakeInput rawInput = FakeInput.createForSourceLines(
       "package example1;",
@@ -244,10 +250,10 @@ public class TrackerTest {
       "        }",
       "}"
       );
-    Issue raw1 = rawInput.createIssueOnLine(9, "R1", "Indentation");
-    Issue raw2 = rawInput.createIssueOnLine(13, "R1", "Indentation");
-    Issue raw3 = rawInput.createIssueOnLine(17, "R1", "Indentation");
-    Issue raw4 = rawInput.createIssueOnLine(21, "R1", "Indentation");
+    Issue raw1 = rawInput.createIssueOnLine(9, RULE_SYSTEM_PRINT, "Indentation");
+    Issue raw2 = rawInput.createIssueOnLine(13, RULE_SYSTEM_PRINT, "Indentation");
+    Issue raw3 = rawInput.createIssueOnLine(17, RULE_SYSTEM_PRINT, "Indentation");
+    Issue raw4 = rawInput.createIssueOnLine(21, RULE_SYSTEM_PRINT, "Indentation");
 
     Tracking<Issue, Issue> tracking = tracker.track(rawInput, baseInput);
     assertThat(tracking.baseFor(raw1)).isNull();
@@ -271,7 +277,7 @@ public class TrackerTest {
       "  }",
       "}"
       );
-    Issue base1 = baseInput.createIssueOnLine(5, "R1", "SystemPrintln");
+    Issue base1 = baseInput.createIssueOnLine(5, RULE_SYSTEM_PRINT, "SystemPrintln");
 
     FakeInput rawInput = FakeInput.createForSourceLines(
       "package example2;",
@@ -291,9 +297,9 @@ public class TrackerTest {
       "  }",
       "}"
       );
-    Issue raw1 = rawInput.createIssueOnLine(6, "R1", "SystemPrintln");
-    Issue raw2 = rawInput.createIssueOnLine(10, "R1", "SystemPrintln");
-    Issue raw3 = rawInput.createIssueOnLine(14, "R1", "SystemPrintln");
+    Issue raw1 = rawInput.createIssueOnLine(6, RULE_SYSTEM_PRINT, "SystemPrintln");
+    Issue raw2 = rawInput.createIssueOnLine(10, RULE_SYSTEM_PRINT, "SystemPrintln");
+    Issue raw3 = rawInput.createIssueOnLine(14, RULE_SYSTEM_PRINT, "SystemPrintln");
 
     Tracking<Issue, Issue> tracking = tracker.track(rawInput, baseInput);
     assertThat(tracking.baseFor(raw1)).isNull();
@@ -321,9 +327,10 @@ public class TrackerTest {
       "\t}",
       "}"
       );
-    Issue base1 = baseInput.createIssueOnLine(6, "UnusedLocalVariable", "Avoid unused local variables such as 'j'.");
-    Issue base2 = baseInput.createIssueOnLine(13, "UnusedPrivateMethod", "Avoid unused private methods such as 'myMethod()'.");
-    Issue base3 = baseInput.createIssueOnLine(9, "NotDesignedForExtension", "Method 'avoidUtilityClass' is not designed for extension - needs to be abstract, final or empty.");
+    Issue base1 = baseInput.createIssueOnLine(6, RULE_UNUSED_LOCAL_VARIABLE, "Avoid unused local variables such as 'j'.");
+    Issue base2 = baseInput.createIssueOnLine(13, RULE_UNUSED_PRIVATE_METHOD, "Avoid unused private methods such as 'myMethod()'.");
+    Issue base3 = baseInput.createIssueOnLine(9, RULE_NOT_DESIGNED_FOR_EXTENSION,
+      "Method 'avoidUtilityClass' is not designed for extension - needs to be abstract, final or empty.");
 
     FakeInput rawInput = FakeInput.createForSourceLines(
       "package sample;",
@@ -348,9 +355,10 @@ public class TrackerTest {
       "}"
       );
 
-    Issue newRaw = rawInput.createIssueOnLine(18, "UnusedLocalVariable", "Avoid unused local variables such as 'msg'.");
-    Issue rawSameAsBase1 = rawInput.createIssueOnLine(6, "UnusedLocalVariable", "Avoid unused local variables such as 'j'.");
-    Issue rawSameAsBase3 = rawInput.createIssueOnLine(9, "NotDesignedForExtension", "Method 'avoidUtilityClass' is not designed for extension - needs to be abstract, final or empty.");
+    Issue newRaw = rawInput.createIssueOnLine(18, RULE_UNUSED_LOCAL_VARIABLE, "Avoid unused local variables such as 'msg'.");
+    Issue rawSameAsBase1 = rawInput.createIssueOnLine(6, RULE_UNUSED_LOCAL_VARIABLE, "Avoid unused local variables such as 'j'.");
+    Issue rawSameAsBase3 = rawInput.createIssueOnLine(9, RULE_NOT_DESIGNED_FOR_EXTENSION,
+      "Method 'avoidUtilityClass' is not designed for extension - needs to be abstract, final or empty.");
 
     Tracking<Issue, Issue> tracking = tracker.track(rawInput, baseInput);
 
@@ -361,10 +369,11 @@ public class TrackerTest {
   }
 
   private static class Issue implements Trackable {
+    private final RuleKey ruleKey;
     private final int line;
-    private final String message, lineHash, ruleKey;
+    private final String message, lineHash;
 
-    Issue(int line, String lineHash, String ruleKey, String message) {
+    Issue(int line, String lineHash, RuleKey ruleKey, String message) {
       this.line = line;
       this.lineHash = lineHash;
       this.ruleKey = ruleKey;
@@ -387,22 +396,17 @@ public class TrackerTest {
     }
 
     @Override
-    public String getRuleKey() {
+    public RuleKey getRuleKey() {
       return ruleKey;
-    }
-
-    @Override
-    public boolean isManual() {
-      return false;
     }
   }
 
   private static class FakeInput implements Input<Issue> {
     private final List<Issue> issues = new ArrayList<>();
-    private final String[] lineHashes;
+    private final List<String> lineHashes;
 
     public FakeInput(String... lineHashes) {
-      this.lineHashes = lineHashes;
+      this.lineHashes = asList(lineHashes);
     }
 
     static FakeInput createForSourceLines(String... lines) {
@@ -413,8 +417,8 @@ public class TrackerTest {
       return new FakeInput(hashes);
     }
 
-    public Issue createIssueOnLine(int line, String ruleKey, String message) {
-      Issue issue = new Issue(line, lineHashes[line - 1], ruleKey, message);
+    public Issue createIssueOnLine(int line, RuleKey ruleKey, String message) {
+      Issue issue = new Issue(line, lineHashes.get(line - 1), ruleKey, message);
       issues.add(issue);
       return issue;
     }
@@ -422,7 +426,7 @@ public class TrackerTest {
     /**
      * No line (line 0)
      */
-    public Issue createIssue(String ruleKey, String message) {
+    public Issue createIssue(RuleKey ruleKey, String message) {
       Issue issue = new Issue(0, "", ruleKey, message);
       issues.add(issue);
       return issue;

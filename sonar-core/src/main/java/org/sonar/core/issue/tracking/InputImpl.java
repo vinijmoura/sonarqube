@@ -17,26 +17,34 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.core.issue.db;
+package org.sonar.core.issue.tracking;
 
-import java.util.List;
-import java.util.Set;
+import java.util.Collection;
 
-public interface IssueMapper {
+public class InputImpl<ISSUE extends Trackable> implements Input<ISSUE> {
 
-  IssueDto selectByKey(String key);
+  private final LineHashSequence lineHashSequence;
+  private final BlockHashSequence blockHashSequence;
+  private final Collection<ISSUE> issues;
 
-  List<IssueDto> selectOpenByComponentUuid(String componentUuid);
+  public InputImpl(LineHashSequence lineHashSequence, BlockHashSequence blockHashSequence, Collection<ISSUE> issues) {
+    this.lineHashSequence = lineHashSequence;
+    this.blockHashSequence = blockHashSequence;
+    this.issues = issues;
+  }
 
-  Set<String> selectComponentUuidsOfOpenIssuesForProjectUuid(String projectUuid);
+  @Override
+  public LineHashSequence getLineHashSequence() {
+    return lineHashSequence;
+  }
 
-  List<IssueDto> selectByKeys(List<String> keys);
+  @Override
+  public BlockHashSequence getBlockHashSequence() {
+    return blockHashSequence;
+  }
 
-  List<IssueDto> selectByActionPlan(String actionPlan);
-
-  void insert(IssueDto issue);
-
-  int update(IssueDto issue);
-
-  int updateIfBeforeSelectedDate(IssueDto issue);
+  @Override
+  public Collection<ISSUE> getIssues() {
+    return issues;
+  }
 }
