@@ -131,15 +131,6 @@ public class ResourceIndexerDao {
     }
   }
 
-  public boolean indexResource(long id) {
-    DbSession session = mybatis.openSession(false);
-    try {
-      return indexResource(session, id);
-    } finally {
-      MyBatis.closeQuietly(session);
-    }
-  }
-
   public boolean indexResource(DbSession session, long id) {
     boolean indexed = false;
     ResourceIndexerMapper mapper = session.getMapper(ResourceIndexerMapper.class);
