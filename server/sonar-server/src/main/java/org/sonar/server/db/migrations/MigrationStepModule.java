@@ -20,7 +20,6 @@
 package org.sonar.server.db.migrations;
 
 import org.sonar.core.component.Module;
-import org.sonar.server.db.migrations.v36.ViolationMigrationStep;
 import org.sonar.server.db.migrations.v42.CompleteIssueMessageMigrationStep;
 import org.sonar.server.db.migrations.v42.PackageKeysMigrationStep;
 import org.sonar.server.db.migrations.v43.ConvertIssueDebtToMinutesMigrationStep;
@@ -80,9 +79,6 @@ public class MigrationStepModule extends Module {
   @Override
   protected void configureModule() {
     add(
-      // 3.6
-      ViolationMigrationStep.class,
-
       // 4.2
       PackageKeysMigrationStep.class, CompleteIssueMessageMigrationStep.class,
 
