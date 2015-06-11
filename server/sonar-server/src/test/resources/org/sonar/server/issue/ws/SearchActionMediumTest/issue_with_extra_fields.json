@@ -8,8 +8,12 @@
         "active": true,
         "email": "simon@email.com"
       },
-      "reporter": "fabrice",
-      "reporterName": "Fabrice",
+      "reporter": {
+        "login": "fabrice",
+        "name": "Fabrice",
+        "active": true,
+        "email": "fabrice@email.com"
+      },
       "actionPlan": "AP-ABCD",
       "actionPlanName": "1.0",
       "actions": [

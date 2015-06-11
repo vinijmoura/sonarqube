@@ -19,7 +19,12 @@
         "active": true,
         "email": "simon@email.com"
       },
-      "reporter": "fabrice",
+      "reporter": {
+        "login": "fabrice",
+        "name": "Fabrice",
+        "active": true,
+        "email": "fabrice@email.com"
+      },
       "actionPlan": "AP-ABCD",
       "updateDate": "2017-12-04T00:00:00+0100",
       "fUpdateAge": "less than a minute"

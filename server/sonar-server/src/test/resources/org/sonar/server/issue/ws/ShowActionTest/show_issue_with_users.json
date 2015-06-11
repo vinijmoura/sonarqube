@@ -11,8 +11,12 @@
     "ruleName": "Avoid cycle",
     "assignee": "john",
     "assigneeName": "John",
-    "reporter": "steven",
-    "reporterName": "Steven",
+    "reporter": {
+      "login": "steven",
+      "name": "Steven",
+      "active": true,
+      "email": "steven@email.com"
+    },
     "author": "Henry",
     "creationDate": "2014-01-22T19:10:03+0100",
     "fCreationDate": "Jan 22, 2014 10:03 AM",
