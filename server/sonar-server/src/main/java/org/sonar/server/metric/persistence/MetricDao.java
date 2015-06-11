@@ -117,4 +117,12 @@ public class MetricDao implements DaoComponent {
   public MetricDto selectNullableById(DbSession session, int id) {
     return mapper(session).selectById(id);
   }
+
+  public MetricDto selectById(DbSession session, int id) {
+    MetricDto metric = mapper(session).selectById(id);
+    if (metric == null) {
+      throw new NotFoundException(String.format("Metric '%d' not found", id));
+    }
+    return metric;
+  }
 }
