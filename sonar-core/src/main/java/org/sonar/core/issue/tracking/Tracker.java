@@ -65,12 +65,12 @@ public class Tracker<RAW extends Trackable, BASE extends Trackable> {
     }
 
     Multimap<SearchKey, BASE> baseSearch = ArrayListMultimap.create();
-    for (BASE base : tracking.untrackedBases()) {
+    for (BASE base : tracking.getUntrackedBases()) {
       baseSearch.put(factory.create(base), base);
     }
 
     Collection<RAW> trackedRaws = new ArrayList<>();
-    for (RAW raw : tracking.untrackedRaws()) {
+    for (RAW raw : tracking.getUntrackedRaws()) {
       SearchKey rawKey = factory.create(raw);
       Collection<BASE> bases = baseSearch.get(rawKey);
       if (!bases.isEmpty()) {
@@ -86,7 +86,7 @@ public class Tracker<RAW extends Trackable, BASE extends Trackable> {
   }
 
   private void relocateManualIssues(Input<RAW> rawInput, Tracking<RAW, BASE> tracking) {
-    for (BASE base : tracking.untrackedBases()) {
+    for (BASE base : tracking.getUntrackedBases()) {
       if (base.getRuleKey().isManual()) {
         if (base.getLine() == 0) {
           // no need to relocate. Location is unchanged.

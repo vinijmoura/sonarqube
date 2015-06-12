@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.Set;
 import org.apache.ibatis.session.ResultContext;
 import org.apache.ibatis.session.ResultHandler;
+import org.sonar.api.utils.System2;
 import org.sonar.core.issue.db.IssueDto;
 import org.sonar.core.issue.db.IssueMapper;
 import org.sonar.core.persistence.DbSession;
@@ -40,10 +41,12 @@ public class BaseIssuesLoader {
 
   private final TreeRootHolder treeRootHolder;
   private final DbClient dbClient;
+  private final System2 system;
 
-  public BaseIssuesLoader(TreeRootHolder treeRootHolder, DbClient dbClient) {
+  public BaseIssuesLoader(TreeRootHolder treeRootHolder, DbClient dbClient, System2 system) {
     this.treeRootHolder = treeRootHolder;
     this.dbClient = dbClient;
+    this.system = system;
   }
 
   public List<BaseIssue> loadForComponentUuid(String componentUuid) {
@@ -51,10 +54,11 @@ public class BaseIssuesLoader {
     final List<BaseIssue> result = new ArrayList<>();
     try {
       Map<String, String> params = ImmutableMap.of("componentUuid", componentUuid);
+      final long now = system.now();
       session.select(IssueMapper.class.getName() + ".selectOpenByComponentUuid", params, new ResultHandler() {
         @Override
         public void handleResult(ResultContext resultContext) {
-          result.add(new BaseIssue((IssueDto) resultContext.getResultObject()));
+          result.add(new BaseIssue((IssueDto) resultContext.getResultObject(), now));
         }
       });
       return result;

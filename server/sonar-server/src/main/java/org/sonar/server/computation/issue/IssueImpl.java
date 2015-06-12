@@ -80,6 +80,9 @@ public class IssueImpl implements MutableIssue<IssueImpl> {
     return this;
   }
 
+  /**
+   * TODO rename to htmlMessage, markdownMessage or textMessage
+   */
   @Override
   public IssueImpl setMessage(@Nullable String s) {
     this.message = s;

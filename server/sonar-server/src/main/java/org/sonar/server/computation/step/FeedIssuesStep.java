@@ -25,6 +25,7 @@ import org.sonar.server.computation.component.Component;
 import org.sonar.server.computation.component.DepthTraversalTypeAwareVisitor;
 import org.sonar.server.computation.component.TreeRootHolder;
 import org.sonar.server.computation.issue.BaseIssue;
+import org.sonar.server.computation.issue.IssueCache;
 import org.sonar.server.computation.issue.MutableIssue;
 import org.sonar.server.computation.issue.TrackerBaseInputFactory;
 import org.sonar.server.computation.issue.TrackerRawInputFactory;
@@ -37,13 +38,15 @@ public class FeedIssuesStep implements ComputationStep {
   private final TrackerBaseInputFactory baseInputFactory;
   private final TrackerRawInputFactory rawInputFactory;
   private final Tracker<MutableIssue, BaseIssue> issueTracker;
+  private final IssueCache issueCache;
 
   public FeedIssuesStep(TreeRootHolder treeRootHolder, TrackerBaseInputFactory baseInputFactory,
-    TrackerRawInputFactory rawInputFactory, Tracker<MutableIssue, BaseIssue> issueTracker) {
+                        TrackerRawInputFactory rawInputFactory, Tracker<MutableIssue, BaseIssue> issueTracker, IssueCache issueCache) {
     this.treeRootHolder = treeRootHolder;
     this.baseInputFactory = baseInputFactory;
     this.rawInputFactory = rawInputFactory;
     this.issueTracker = issueTracker;
+    this.issueCache = issueCache;
   }
 
   @Override
@@ -51,9 +54,9 @@ public class FeedIssuesStep implements ComputationStep {
     // for each component:
     // load base issues DONE
     // read raw issues DONE
-    // load QProfile
-    // tracking
-    // relocate manual issues
+    // load QProfile DONE
+    // tracking DONE
+    // relocate manual issues TODO
     // apply workflow
     // if new, auto-assign
     // if new, copy rule tags

@@ -33,13 +33,19 @@ import org.sonar.core.issue.tracking.Trackable;
  */
 public class BaseIssue implements Issue, Trackable {
   private final IssueDto dto;
+  private final long loadedAt;
 
-  BaseIssue(IssueDto dto) {
+  BaseIssue(IssueDto dto, long loadedAt) {
     this.dto = dto;
+    this.loadedAt = loadedAt;
   }
 
   public IssueDto getDto() {
     return dto;
+  }
+
+  public long getLoadedAt() {
+    return loadedAt;
   }
 
   @Override

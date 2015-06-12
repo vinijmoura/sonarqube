@@ -41,6 +41,7 @@ import org.sonar.server.computation.component.DbIdsRepository;
 import org.sonar.server.computation.component.ProjectSettingsRepository;
 import org.sonar.server.computation.component.TreeRootHolderImpl;
 import org.sonar.server.computation.event.EventRepositoryImpl;
+import org.sonar.server.computation.issue.BaseIssuesLoader;
 import org.sonar.server.computation.issue.IssueCache;
 import org.sonar.server.computation.issue.IssueComputation;
 import org.sonar.server.computation.issue.RuleCache;
@@ -48,6 +49,8 @@ import org.sonar.server.computation.issue.RuleCacheLoader;
 import org.sonar.server.computation.issue.ScmAccountCache;
 import org.sonar.server.computation.issue.ScmAccountCacheLoader;
 import org.sonar.server.computation.issue.SourceLinesCache;
+import org.sonar.server.computation.issue.TrackerBaseInputFactory;
+import org.sonar.server.computation.issue.TrackerRawInputFactory;
 import org.sonar.server.computation.language.PlatformLanguageRepository;
 import org.sonar.server.computation.measure.MeasureRepositoryImpl;
 import org.sonar.server.computation.measure.MetricCache;
@@ -154,6 +157,9 @@ public class ComputeEngineContainerImpl extends ComponentContainer implements Co
       IssueCache.class,
       MetricCache.class,
       UpdateConflictResolver.class,
+      TrackerBaseInputFactory.class,
+      TrackerRawInputFactory.class,
+      BaseIssuesLoader.class,
 
       // views
       ViewIndex.class,

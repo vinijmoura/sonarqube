@@ -24,6 +24,7 @@ import com.google.common.collect.Multimap;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.IdentityHashMap;
+import java.util.Map;
 import java.util.Set;
 import javax.annotation.CheckForNull;
 
@@ -62,8 +63,12 @@ public class Tracking<RAW extends Trackable, BASE extends Trackable> {
     this.untrackedBases.addAll(baseInput.getIssues());
   }
 
-  public Set<RAW> untrackedRaws() {
+  public Set<RAW> getUntrackedRaws() {
     return untrackedRaws;
+  }
+
+  public Map<RAW, BASE> getTrackedRaws() {
+    return rawToBase;
   }
 
   @CheckForNull
@@ -74,7 +79,7 @@ public class Tracking<RAW extends Trackable, BASE extends Trackable> {
   /**
    * The base issues that are not matched by a raw issue and that need to be closed. Manual
    */
-  public Set<BASE> untrackedBases() {
+  public Set<BASE> getUntrackedBases() {
     return untrackedBases;
   }
 

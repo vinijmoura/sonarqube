@@ -46,7 +46,7 @@ public class ComputationSteps {
 
       // Read report
       ParseReportStep.class,
-
+      FeedIssuesStep.class,
       QualityGateLoadingStep.class,
 
       // data computation

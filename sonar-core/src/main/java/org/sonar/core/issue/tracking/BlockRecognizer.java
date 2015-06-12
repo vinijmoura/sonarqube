@@ -39,8 +39,8 @@ class BlockRecognizer<RAW extends Trackable, BASE extends Trackable> {
     BlockHashSequence baseHashSequence = baseInput.getBlockHashSequence();
     BlockHashSequence rawHashSequence = rawInput.getBlockHashSequence();
 
-    Multimap<Integer, RAW> rawsByLine = groupByLine(tracking.untrackedRaws());
-    Multimap<Integer, BASE> basesByLine = groupByLine(tracking.untrackedBases());
+    Multimap<Integer, RAW> rawsByLine = groupByLine(tracking.getUntrackedRaws());
+    Multimap<Integer, BASE> basesByLine = groupByLine(tracking.getUntrackedBases());
     Map<Integer, HashOccurrence> map = new HashMap<>();
 
     for (Integer line : basesByLine.keySet()) {

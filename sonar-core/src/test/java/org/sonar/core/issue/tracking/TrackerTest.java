@@ -69,7 +69,7 @@ public class TrackerTest {
 
     Tracking<Issue, Issue> tracking = tracker.track(rawInput, baseInput);
     assertThat(tracking.baseFor(raw)).isNull();
-    assertThat(tracking.untrackedBases()).containsOnly(base);
+    assertThat(tracking.getUntrackedBases()).containsOnly(base);
   }
 
   @Test
@@ -178,7 +178,7 @@ public class TrackerTest {
 
     Tracking<Issue, Issue> tracking = tracker.track(rawInput, baseInput);
     assertThat(tracking.baseFor(raw)).isNull();
-    assertThat(tracking.untrackedBases()).containsOnly(base);
+    assertThat(tracking.getUntrackedBases()).containsOnly(base);
   }
 
   @Test
@@ -191,7 +191,7 @@ public class TrackerTest {
 
     Tracking<Issue, Issue> tracking = tracker.track(rawInput, baseInput);
     assertThat(tracking.baseFor(raw)).isNull();
-    assertThat(tracking.untrackedBases()).containsOnly(base);
+    assertThat(tracking.getUntrackedBases()).containsOnly(base);
   }
 
   @Test
@@ -260,7 +260,7 @@ public class TrackerTest {
     assertThat(tracking.baseFor(raw2)).isNull();
     assertThat(tracking.baseFor(raw3)).isSameAs(base1);
     assertThat(tracking.baseFor(raw4)).isSameAs(base2);
-    assertThat(tracking.untrackedBases()).isEmpty();
+    assertThat(tracking.getUntrackedBases()).isEmpty();
   }
 
   /**
@@ -365,7 +365,7 @@ public class TrackerTest {
     assertThat(tracking.baseFor(newRaw)).isNull();
     assertThat(tracking.baseFor(rawSameAsBase1)).isSameAs(base1);
     assertThat(tracking.baseFor(rawSameAsBase3)).isSameAs(base3);
-    assertThat(tracking.untrackedBases()).containsOnly(base2);
+    assertThat(tracking.getUntrackedBases()).containsOnly(base2);
   }
 
   private static class Issue implements Trackable {
