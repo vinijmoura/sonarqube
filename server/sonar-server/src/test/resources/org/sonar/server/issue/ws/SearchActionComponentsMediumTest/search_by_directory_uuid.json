@@ -4,8 +4,12 @@
   "issues": [
     {
       "key": "82fd47d4-b650-4037-80bc-7b112bd4eac2",
-      "component": "module1:MyComponent",
-      "project": "MyProject",
+      "component": {
+        "key": "module1:MyComponent"
+      },
+      "project": {
+        "key": "MyProject"
+      },
       "rule": "xoo:x1"
     }
   ]

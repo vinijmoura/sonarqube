@@ -41,6 +41,7 @@ import org.sonar.api.utils.Durations;
 import org.sonar.api.utils.text.JsonWriter;
 import org.sonar.core.component.ComponentDto;
 import org.sonar.markdown.Markdown;
+import org.sonar.server.component.ws.ComponentJsonWriter;
 import org.sonar.server.user.UserSession;
 import org.sonar.server.user.ws.UserJsonWriter;
 
@@ -58,13 +59,15 @@ public class IssueJsonWriter {
   private final UserSession userSession;
   private final UserJsonWriter userWriter;
   private final IssueActionsWriter actionsWriter;
+  private final ComponentJsonWriter componentWriter;
 
-  public IssueJsonWriter(I18n i18n, Durations durations, UserSession userSession, UserJsonWriter userWriter, IssueActionsWriter actionsWriter) {
+  public IssueJsonWriter(I18n i18n, Durations durations, UserSession userSession, UserJsonWriter userWriter, IssueActionsWriter actionsWriter, ComponentJsonWriter componentWriter) {
     this.i18n = i18n;
     this.durations = durations;
     this.userSession = userSession;
     this.userWriter = userWriter;
     this.actionsWriter = actionsWriter;
+    this.componentWriter = componentWriter;
   }
 
   public void write(JsonWriter json, Issue issue, Map<String, User> usersByLogin, Map<String, ComponentDto> componentsByUuid,
@@ -85,11 +88,8 @@ public class IssueJsonWriter {
 
     json
       .prop("key", issue.key())
-      .prop("component", file != null ? file.getKey() : null)
       // Only used for the compatibility with the Issues Java WS Client <= 4.4 used by Eclipse
       .prop("componentId", file != null ? file.getId() : null)
-      .prop("project", project != null ? project.getKey() : null)
-      .prop("subProject", subProject != null ? subProject.getKey() : null)
       .prop("rule", issue.ruleKey().toString())
       .prop("status", issue.status())
       .prop("resolution", issue.resolution())
@@ -105,10 +105,27 @@ public class IssueJsonWriter {
       .prop("fUpdateAge", formatAgeDate(updateDate))
       .prop("closeDate", isoDate(issue.closeDate()));
 
-    json.name("assignee");
-    userWriter.write(json, usersByLogin.get(issue.assignee()));
-    json.name("reporter");
-    userWriter.write(json, usersByLogin.get(issue.reporter()));
+    if (issue.assignee() != null) {
+      json.name("assignee");
+      userWriter.write(json, usersByLogin.get(issue.assignee()));
+    }
+    if (issue.reporter() != null) {
+      json.name("reporter");
+      userWriter.write(json, usersByLogin.get(issue.reporter()));
+    }
+
+    if (file != null) {
+      json.name("component");
+      componentWriter.write(json, file);
+    }
+    if (project != null) {
+      json.name("project");
+      componentWriter.write(json, project);
+    }
+    if (subProject != null) {
+      json.name("subProject");
+      componentWriter.write(json, subProject);
+    }
 
     writeTags(issue, json);
     writeIssueComments(commentsByIssues.get(issue.key()), usersByLogin, json);

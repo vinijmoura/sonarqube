@@ -2,8 +2,13 @@
   "issues": [
     {
       "key": "82fd47d4-b650-4037-80bc-7b112bd4eac2",
-      "component": "RemovedComponent",
-      "project": "MyProject",
+      "component": {
+        "key": "RemovedComponent",
+        "enabled": false
+      },
+      "project": {
+        "key": "MyProject"
+      },
       "rule": "xoo:x1",
       "status": "OPEN",
       "resolution": "OPEN",

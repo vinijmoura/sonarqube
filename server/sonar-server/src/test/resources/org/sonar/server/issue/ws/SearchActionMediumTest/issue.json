@@ -5,8 +5,16 @@
   "issues": [
     {
       "key": "82fd47d4-b650-4037-80bc-7b112bd4eac2",
-      "component": "MyComponent",
-      "project": "MyProject",
+      "component": {
+        "id": "BCDE",
+        "key": "MyComponent",
+        "enabled": true
+      },
+      "project": {
+        "id": "ABCD",
+        "key": "MyProject",
+        "enabled": true
+      },
       "rule": "xoo:x1",
       "status": "OPEN",
       "resolution": "OPEN",

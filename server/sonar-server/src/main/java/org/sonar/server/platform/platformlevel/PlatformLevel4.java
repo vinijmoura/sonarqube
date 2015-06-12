@@ -63,6 +63,7 @@ import org.sonar.server.component.ComponentCleanerService;
 import org.sonar.server.component.ComponentService;
 import org.sonar.server.component.DefaultComponentFinder;
 import org.sonar.server.component.DefaultRubyComponentService;
+import org.sonar.server.component.ws.ComponentJsonWriter;
 import org.sonar.server.component.ws.ComponentsWs;
 import org.sonar.server.component.ws.EventsWs;
 import org.sonar.server.component.ws.ResourcesWs;
@@ -582,6 +583,7 @@ public class PlatformLevel4 extends PlatformLevel {
       NewAlerts.class,
       NewAlerts.newMetadata(),
       ComponentCleanerService.class,
+      ComponentJsonWriter.class,
 
       // views
       ViewIndexDefinition.class,

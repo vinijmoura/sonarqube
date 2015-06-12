@@ -2,8 +2,12 @@
   "issues": [
     {
       "key": "82fd47d4-b650-4037-80bc-7b112bd4eac2",
-      "component": "MyComponent",
-      "project": "MyProject",
+      "component": {
+        "key": "MyComponent"
+      },
+      "project": {
+        "key": "MyProject"
+      },
       "rule": "xoo:x1",
       "status": "OPEN",
       "resolution": "OPEN",
@@ -13,8 +17,12 @@
     },
     {
       "key": "92fd47d4-b650-4037-80bc-7b112bd4eac2",
-      "component": "MyComponent2",
-      "project": "MyProject2",
+      "component": {
+        "key": "MyComponent2"
+      },
+      "project": {
+        "key": "MyProject2"
+      },
       "rule": "xoo:x1",
       "status": "OPEN",
       "resolution": "OPEN",
