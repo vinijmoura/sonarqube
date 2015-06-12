@@ -1,13 +1,13 @@
 <div class="component-name issues-workspace-list-component">
-  <a class="component-name-parent link-no-underline" href="{{dashboardUrl project}}">
-    {{qualifierIcon "TRK"}}&nbsp;{{projectLongName}}
+  <a class="component-name-parent link-no-underline" href="{{dashboardUrl project.key}}">
+    {{qualifierIcon "TRK"}}&nbsp;{{project.name}}
   </a>
   {{#if subProject}}
-    <a class="component-name-parent link-no-underline" href="{{dashboardUrl subProject}}">
-      {{qualifierIcon "TRK"}}&nbsp;{{subProjectLongName}}
+    <a class="component-name-parent link-no-underline" href="{{dashboardUrl subProject.key}}">
+      {{qualifierIcon "TRK"}}&nbsp;{{subProject.name}}
     </a>
   {{/if}}
-  <a class="component-name-file link-no-underline" href="{{dashboardUrl component}}">
-    {{qualifierIcon componentQualifier}}&nbsp;{{componentLongName}}
+  <a class="component-name-file link-no-underline" href="{{dashboardUrl component.key}}">
+    {{qualifierIcon component.qualifier}}&nbsp;{{component.longName}}
   </a>
 </div>

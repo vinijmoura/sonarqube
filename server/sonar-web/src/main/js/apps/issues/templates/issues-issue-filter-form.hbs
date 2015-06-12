@@ -70,22 +70,22 @@
   <li class="divider"></li>
 
   <li>
-    <a href="#" data-property="projectUuids" data-value="{{projectUuid}}">
-      {{qualifierIcon "TRK"}}&nbsp;{{projectLongName}}
+    <a href="#" data-property="projectUuids" data-value="{{project.id}}">
+      {{qualifierIcon "TRK"}}&nbsp;{{project.name}}
     </a>
   </li>
 
   {{#if subProject}}
     <li>
-      <a href="#" data-property="moduleUuids" data-value="{{subProjectUuid}}">
-        {{qualifierIcon "BRC"}}&nbsp;{{subProjectLongName}}
+      <a href="#" data-property="moduleUuids" data-value="{{subProject.id}}">
+        {{qualifierIcon "BRC"}}&nbsp;{{subProject.name}}
       </a>
     </li>
   {{/if}}
 
   <li>
-    <a href="#" data-property="fileUuids" data-value="{{componentUuid}}">
-      {{qualifierIcon componentQualifier}}&nbsp;{{fileFromPath componentLongName}}
+    <a href="#" data-property="fileUuids" data-value="{{component.id}}">
+      {{qualifierIcon component.qualifier}}&nbsp;{{fileFromPath component.name}}
     </a>
   </li>
 </ul>

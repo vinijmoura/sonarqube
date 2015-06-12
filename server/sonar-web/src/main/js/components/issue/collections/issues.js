@@ -24,21 +24,7 @@ define([
       };
 
       return r.issues.map(function (issue) {
-        var component = find(r.components, issue.component),
-            project = find(r.projects, issue.project),
-            rule = find(r.rules, issue.rule)
-        if (component) {
-          _.extend(issue, {
-            componentLongName: component.longName,
-            componentQualifier: component.qualifier
-          });
-        }
-        if (project) {
-          _.extend(issue, {
-            projectLongName: project.longName,
-            projectUuid: project.uuid
-          });
-        }
+        var rule = find(r.rules, issue.rule);
         if (rule) {
           _.extend(issue, { ruleName: rule.name });
         }

@@ -57,10 +57,29 @@
   "issues": [
     {
       "key": "10c6eeca-cc71-40fc-9ea8-fa90fef8db72",
-      "component": "org.codehaus.sonar:sonar-plugin-api:src/main/java/org/sonar/api/CoreProperties.java",
-      "componentId": 3509,
-      "project": "org.codehaus.sonar:sonar",
-      "subProject": "org.codehaus.sonar:sonar-plugin-api",
+      "component": {
+        "id": "b0517331-0aaf-4091-b5cf-8e305dd0337a",
+        "key": "org.codehaus.sonar:sonar-plugin-api:src/main/java/org/sonar/api/CoreProperties.java",
+        "enabled": true,
+        "qualifier": "FIL",
+        "name": "CoreProperties.java",
+        "longName": "src/main/java/org/sonar/api/CoreProperties.java"
+      },
+      "project": {
+        "id": "69e57151-be0d-4157-adff-c06741d88879",
+        "key": "org.codehaus.sonar:sonar",
+        "qualifier": "TRK",
+        "name": "SonarQube",
+        "longName": "SonarQube"
+      },
+      "subProject": {
+        "id": "7feef7c3-11b9-4175-b5a7-527ca3c75cb7",
+        "key": "org.codehaus.sonar:sonar-plugin-api",
+        "enabled": true,
+        "qualifier": "BRC",
+        "name": "SonarQube :: Plugin API",
+        "longName": "SonarQube :: Plugin API"
+      },
       "rule": "squid:S1214",
       "status": "CONFIRMED",
       "severity": "MAJOR",
@@ -96,7 +115,6 @@
       "key": "squid:S1214",
       "name": "Constants should not be defined in interfaces",
       "lang": "java",
-      "desc": "<p>According to Joshua Bloch, author of \"Effective Java\":</p>\n\n<blockquote>\n<p>\nThe constant interface pattern is a poor use of interfaces.\n</p>\n\n<p>\nThat a class uses some constants internally is an implementation detail.\nImplementing a constant interface causes this implementation detail to leak into the class's exported API.\nIt is of no consequence to the users of a class that the class implements a constant interface.\nIn fact, it may even confuse them.\nWorse, it represents a commitment:\nif in a future release the class is modified so that it no longer needs to use the constants,\nit still must implement the interface to ensure binary compatibility.\nIf a nonfinal class implements a constant interface,\nall of its subclasses will have their namespaces polluted by the constants in the interface.\n</p>\n</blockquote>\n\n<h2>Noncompliant Code Example</h2>\n\n<pre>\ninterface Status {                      // Non-Compliant\n   int OPEN = 1;\n   int CLOSED = 2;\n}\n</pre>\n\n<h2>Compliant Solution</h2>\n\n<pre>\npublic enum Status {                    // Compliant\n  OPEN,\n  CLOSED;\n}\n</pre>\n\n<p>or</p>\n\n<pre>\npublic final class Status {             // Compliant\n   public static final int OPEN = 1;\n   public static final int CLOSED = 2;\n}\n</pre>",
       "status": "READY",
       "langName": "Java"
     }

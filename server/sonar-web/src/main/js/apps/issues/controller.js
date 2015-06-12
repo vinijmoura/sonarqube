@@ -197,13 +197,13 @@ define([
 
     _prepareComponent: function (issue) {
       return {
-        key: issue.get('component'),
-        name: issue.get('componentLongName'),
-        qualifier: issue.get('componentQualifier'),
-        subProject: issue.get('subProject'),
-        subProjectName: issue.get('subProjectLongName'),
-        project: issue.get('project'),
-        projectName: issue.get('projectLongName')
+        key: issue.get('component').key,
+        name: issue.get('component').longName,
+        qualifier: issue.get('component').qualifier,
+        subProject: issue.get('subProject') ? issue.get('subProject').key : null,
+        subProjectName: issue.get('subProject') ? issue.get('subProject').name : null,
+        project: issue.get('project').key,
+        projectName: issue.get('project').name
       };
     },
 

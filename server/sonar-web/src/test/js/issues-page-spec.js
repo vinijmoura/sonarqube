@@ -53,28 +53,22 @@ casper.test.begin(testName('Base'), function (test) {
           test.assertExists('.facet[data-value=MINOR]');
           test.assertExists('.facet[data-value=INFO]');
 
-          test.assertExists('.facet[data-value=OPEN]');
-          test.assertExists('.facet[data-value=REOPENED]');
-          test.assertExists('.facet[data-value=CONFIRMED]');
-          test.assertExists('.facet[data-value=RESOLVED]');
-          test.assertExists('.facet[data-value=CLOSED]');
-
           test.assertExists('.facet[data-unresolved]');
           test.assertExists('.facet[data-value=REMOVED]');
           test.assertExists('.facet[data-value=FIXED]');
           test.assertExists('.facet[data-value=FALSE-POSITIVE]');
 
           // Issues
-          test.assertElementCount('.issue', 50);
+          test.assertElementCount('.issue', 15);
           test.assertElementCount('.issue.selected', 1);
-          test.assertSelectorContains('.issue', '1 more branches need to be covered by unit tests to reach');
+          test.assertSelectorContains('.issue', 'Replace all tab characters in this file');
 
           // Filters
           test.assertExists('.js-new-search');
           test.assertExists('.js-filter-save-as');
 
           // Workspace header
-          test.assertSelectorContains('#issues-total', '4623');
+          test.assertSelectorContains('#issues-total', '15');
           test.assertExists('.js-prev');
           test.assertExists('.js-next');
           test.assertExists('.js-reload');
@@ -123,27 +117,21 @@ casper.test.begin(testName('Context'), function (test) {
           test.assertExists('.facet[data-value=MINOR]');
           test.assertExists('.facet[data-value=INFO]');
 
-          test.assertExists('.facet[data-value=OPEN]');
-          test.assertExists('.facet[data-value=REOPENED]');
-          test.assertExists('.facet[data-value=CONFIRMED]');
-          test.assertExists('.facet[data-value=RESOLVED]');
-          test.assertExists('.facet[data-value=CLOSED]');
-
           test.assertExists('.facet[data-unresolved]');
           test.assertExists('.facet[data-value=REMOVED]');
           test.assertExists('.facet[data-value=FIXED]');
           test.assertExists('.facet[data-value=FALSE-POSITIVE]');
 
           // Issues
-          test.assertElementCount('.issue', 50);
+          test.assertElementCount('.issue', 15);
           test.assertElementCount('.issue.selected', 1);
-          test.assertSelectorContains('.issue', '1 more branches need to be covered by unit tests to reach');
+          test.assertSelectorContains('.issue', 'Replace all tab characters in this file');
 
           // Filters
           test.assertExists('.js-new-search');
 
           // Workspace header
-          test.assertSelectorContains('#issues-total', '4623');
+          test.assertSelectorContains('#issues-total', '15');
           test.assertExists('.js-prev');
           test.assertExists('.js-next');
           test.assertExists('.js-reload');
@@ -182,11 +170,11 @@ casper.test.begin(testName('Issue Box', 'Check Elements'), function (test) {
       })
 
       .then(function () {
-        test.assertSelectorContains('.issue.selected', "Add a 'package-info.java' file to document the");
+        test.assertSelectorContains('.issue.selected', 'Replace all tab characters in this file');
         test.assertExists('.issue.selected .js-issue-tags');
-        test.assertSelectorContains('.issue.selected .js-issue-tags', 'issue.no_tag');
+        test.assertSelectorContains('.issue.selected .js-issue-tags', 'convention');
         test.assertExists('.issue.selected .js-issue-set-severity');
-        test.assertSelectorContains('.issue.selected .js-issue-set-severity', 'MAJOR');
+        test.assertSelectorContains('.issue.selected .js-issue-set-severity', 'MINOR');
         test.assertSelectorContains('.issue.selected', 'CONFIRMED');
         test.assertElementCount('.issue.selected .js-issue-transition', 1);
         test.assertExists('.issue.selected .js-issue-transition');
@@ -194,7 +182,7 @@ casper.test.begin(testName('Issue Box', 'Check Elements'), function (test) {
         test.assertSelectorContains('.issue.selected .js-issue-assign', 'unassigned');
         test.assertExists('.issue.selected .js-issue-plan');
         test.assertSelectorContains('.issue.selected .js-issue-plan', 'unplanned');
-        test.assertSelectorContains('.issue.selected', '20min');
+        test.assertSelectorContains('.issue.selected', '2min');
         test.assertExists('.issue.selected .js-issue-comment');
         test.assertExists('.issue.selected .js-issue-show-changelog');
       })
@@ -428,7 +416,7 @@ casper.test.begin(testName('Severity Facet'), function (test) {
 
 
 casper.test.begin(testName('Select Issues'), 11, function (test) {
-  var issueKey = '94357807-fcb4-40cc-9598-9a715f1eee6e',
+  var issueKey = '4bd53abf-f772-4882-8bb3-971bb5a7ef30',
       issueSelector = '.issue[data-key="' + issueKey + '"]';
 
   casper
@@ -453,7 +441,7 @@ casper.test.begin(testName('Select Issues'), 11, function (test) {
         test.assertExists('.js-selection');
         test.assertDoesntExist('.js-selection.icon-checkbox-checked');
         test.assertVisible('.issue .js-toggle');
-        test.assertElementCount('.js-toggle', 50);
+        test.assertElementCount('.js-toggle', 15);
       })
 
       .then(function () {
@@ -472,7 +460,7 @@ casper.test.begin(testName('Select Issues'), 11, function (test) {
       .then(function () {
         casper.click('.js-selection');
         test.assertExists('.js-selection.icon-checkbox-checked');
-        test.assertElementCount('.js-toggle .icon-checkbox-checked', 50);
+        test.assertElementCount('.js-toggle .icon-checkbox-checked', 15);
       })
 
       .then(function () {
@@ -525,7 +513,7 @@ casper.test.begin(testName('Bulk Change'), function (test) {
 
 
 casper.test.begin(testName('Bulk Change of Selected Issues'), 8, function (test) {
-  var issueKey = '94357807-fcb4-40cc-9598-9a715f1eee6e',
+  var issueKey = '4bd53abf-f772-4882-8bb3-971bb5a7ef30',
       issueSelector = '.issue[data-key="' + issueKey + '"]';
 
   casper
@@ -595,7 +583,7 @@ casper.test.begin(testName('Bulk Change of Selected Issues'), 8, function (test)
 
 casper.test.begin(testName('Filter Similar Issues'), 12, function (test) {
   casper
-      .start(lib.buildUrl('issues'), function () {
+      .start(lib.buildUrl('issues#resolved=false'), function () {
         lib.setDefaultViewport();
 
 
@@ -612,7 +600,7 @@ casper.test.begin(testName('Filter Similar Issues'), 12, function (test) {
       })
 
       .then(function () {
-        casper.waitForSelector('.issue.selected');
+        casper.waitForSelector('.issue');
       })
 
       .then(function () {

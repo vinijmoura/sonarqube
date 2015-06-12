@@ -89,8 +89,8 @@ define([
         var prev = this.collection.at(index - 1),
             putComponent = prev == null;
         if (prev != null) {
-          var fullComponent = [model.get('project'), model.get('component')].join(' '),
-              fullPrevComponent = [prev.get('project'), prev.get('component')].join(' ');
+          var fullComponent = [model.get('project').key, model.get('component').key].join(' '),
+              fullPrevComponent = [prev.get('project').key, prev.get('component').key].join(' ');
           if (fullComponent !== fullPrevComponent) {
             putComponent = true;
           }

@@ -102,12 +102,12 @@ define([
     resetIssue: function (options) {
       var that = this;
       var key = this.model.get('key'),
-          componentUuid = this.model.get('componentUuid'),
+          componentId = this.model.get('component').id,
           index = this.model.get('index'),
           selected = this.model.get('selected');
       this.model.reset({
         key: key,
-        componentUuid: componentUuid,
+        componentUuid: componentId,
         index: index,
         selected: selected
       }, { silent: true });

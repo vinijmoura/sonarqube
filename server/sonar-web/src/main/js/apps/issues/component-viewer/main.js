@@ -82,7 +82,7 @@ define([
     select: function () {
       var selected = this.options.app.state.get('selectedIndex'),
           selectedIssue = this.options.app.list.at(selected);
-      if (selectedIssue.get('component') === this.model.get('key')) {
+      if (selectedIssue.get('component').key === this.model.get('key')) {
         return this.scrollToIssue(selectedIssue.get('key'));
       } else {
         this.unbindShortcuts();
@@ -131,9 +131,9 @@ define([
 
     openFileByIssue: function (issue) {
       this.baseIssue = issue;
-      var componentKey = issue.get('component'),
-          componentUuid = issue.get('componentUuid');
-      return this.open(componentUuid, componentKey);
+      var componentKey = issue.get('component').key,
+          componentId = issue.get('component').id;
+      return this.open(componentId, componentKey);
     },
 
     linesLimit: function () {
@@ -161,14 +161,14 @@ define([
     requestIssues: function () {
       var that = this;
       var r;
-      if (this.options.app.list.last().get('component') === this.model.get('key')) {
+      if (this.options.app.list.last().get('component').key === this.model.get('key')) {
         r = this.options.app.controller.fetchNextPage();
       } else {
         r = $.Deferred().resolve().promise();
       }
       return r.done(function () {
         that.issues.reset(that.options.app.list.filter(function (issue) {
-          return issue.get('component') === that.model.key();
+          return issue.get('component').key === that.model.key();
         }));
         that.issues.reset(that.limitIssues(that.issues));
         return that.addIssuesPerLineMeta(that.issues);
